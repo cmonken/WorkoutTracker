@@ -25,7 +25,9 @@ public class MainActivity extends Activity {
     Button sunBtn;
     Button reportsBtn;
     Button helpBtn;
+    String buttonClicked;
     Intent intRun;
+    View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,49 +49,56 @@ public class MainActivity extends Activity {
         monBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                callMonIntent();
+                buttonSetDay(v);
+                callDayIntent();
             }
         });
 
         tueBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                callTueIntent();
+                buttonSetDay(v);
+                callDayIntent();
             }
         });
 
         wedBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                callWedIntent();
+                buttonSetDay(v);
+                callDayIntent();
             }
         });
 
         thursBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                callThursIntent();
+                buttonSetDay(v);
+                callDayIntent();
             }
         });
 
         friBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                callFriIntent();
+                buttonSetDay(v);
+                callDayIntent();
             }
         });
 
         satBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                callSatIntent();
+                buttonSetDay(v);
+                callDayIntent();
             }
         });
 
         sunBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                callSunIntent();
+                buttonSetDay(v);
+                callDayIntent();
             }
         });
 
@@ -108,38 +117,9 @@ public class MainActivity extends Activity {
         });
     }
 
-    public void callMonIntent(){
-        intRun = new Intent(this, MonActivity.class);
-        startActivity(intRun);
-    }
-
-    public void callTueIntent(){
-        intRun = new Intent(this, TueActivity.class);
-        startActivity(intRun);
-    }
-
-    public void callWedIntent(){
-        intRun = new Intent(this, WedActivity.class);
-        startActivity(intRun);
-    }
-
-    public void callThursIntent(){
-        intRun = new Intent(this, ThursActivity.class);
-        startActivity(intRun);
-    }
-
-    public void callFriIntent(){
-        intRun = new Intent(this, FriActivity.class);
-        startActivity(intRun);
-    }
-
-    public void callSatIntent(){
-        intRun = new Intent(this, SatActivity.class);
-        startActivity(intRun);
-    }
-
-    public void callSunIntent(){
-        intRun = new Intent(this, SunActivity.class);
+    public void callDayIntent(){
+        intRun = new Intent(this, DayActivity.class);
+        intRun.putExtra("Day", buttonClicked);
         startActivity(intRun);
     }
 
@@ -153,6 +133,37 @@ public class MainActivity extends Activity {
         startActivity(intRun);
     }
 
+    public void buttonSetDay(View v) {
+        switch (v.getId()) {
+            case R.id.button1:
+                buttonClicked = "Monday";
+                break;
+            case R.id.button2:
+                buttonClicked = "Tuesday";
+                break;
+            case R.id.button3:
+                buttonClicked = "Wednesday";
+                break;
+            case R.id.button4:
+                buttonClicked = "Thursday";
+                break;
+            case R.id.button5:
+                buttonClicked = "Friday";
+                break;
+            case R.id.button6:
+                buttonClicked = "Saturday";
+                break;
+            case R.id.button7:
+                buttonClicked = "Sunday";
+                break;
+            case R.id.button8:
+                buttonClicked = "Reports";
+                break;
+            case R.id.button9:
+                buttonClicked = "Help";
+                break;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
