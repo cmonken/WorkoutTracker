@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -26,8 +27,9 @@ public class MainActivity extends Activity {
     Button reportsBtn;
     Button helpBtn;
     String buttonClicked;
-    Intent intRun;
-    View v;
+    Intent intent;
+    //View v;
+    View target;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,102 +37,52 @@ public class MainActivity extends Activity {
         //setContentView(R.layout.activity_main);
         setContentView(R.layout.fragment_main);
 
-        monBtn  = (Button) findViewById(R.id.button1);
-        tueBtn  = (Button) findViewById(R.id.button2);
-        wedBtn  = (Button) findViewById(R.id.button3);
-        thursBtn  = (Button) findViewById(R.id.button4);
-        friBtn  = (Button) findViewById(R.id.button5);
-        satBtn  = (Button) findViewById(R.id.button6);
-        sunBtn  = (Button) findViewById(R.id.button7);
-        reportsBtn  = (Button) findViewById(R.id.button8);
-        helpBtn  = (Button) findViewById(R.id.button9);
-
-
-        monBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonSetDay(v);
-                callDayIntent();
-            }
-        });
-
-        tueBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonSetDay(v);
-                callDayIntent();
-            }
-        });
-
-        wedBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonSetDay(v);
-                callDayIntent();
-            }
-        });
-
-        thursBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonSetDay(v);
-                callDayIntent();
-            }
-        });
-
-        friBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonSetDay(v);
-                callDayIntent();
-            }
-        });
-
-        satBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonSetDay(v);
-                callDayIntent();
-            }
-        });
-
-        sunBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonSetDay(v);
-                callDayIntent();
-            }
-        });
-
-        reportsBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callReportsIntent();
-            }
-        });
-
-        helpBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callHelpIntent();
-            }
-        });
+        monBtn = (Button) findViewById(R.id.button1);
+        tueBtn = (Button) findViewById(R.id.button2);
+        wedBtn = (Button) findViewById(R.id.button3);
+        thursBtn = (Button) findViewById(R.id.button4);
+        friBtn = (Button) findViewById(R.id.button5);
+        satBtn = (Button) findViewById(R.id.button6);
+        sunBtn = (Button) findViewById(R.id.button7);
+        reportsBtn = (Button) findViewById(R.id.button8);
+        helpBtn = (Button) findViewById(R.id.button9);
     }
+        public void myClickHandler(View target) {
+            buttonSetDay(target);
+            Toast.makeText(getApplicationContext(), buttonClicked,
+                    Toast.LENGTH_SHORT).show();
+            if(buttonClicked == "Reports" || buttonClicked == "Help") {
+                if(buttonClicked == "Reports") {
+                    callReportsIntent();
+                }
+                else if(buttonClicked == "Help") {
+                    callHelpIntent();
+                }
+            }
+            else if (buttonClicked == "Monday" || buttonClicked == "Tuesday" ||
+                    buttonClicked == "Wednesday" || buttonClicked == "Thursday" ||
+                    buttonClicked == "Friday" || buttonClicked == "Saturday" ||
+                    buttonClicked == "Sunday") {
+                callDayIntent();
+            }
+        }
 
     public void callDayIntent(){
-        intRun = new Intent(this, DayActivity.class);
-        intRun.putExtra("Day", buttonClicked);
-        startActivity(intRun);
+        intent = new Intent(this, DayActivity.class);
+        intent.putExtra("Day", buttonClicked);
+        startActivity(intent);
     }
 
     public void callReportsIntent(){
-        intRun = new Intent(this, ReportsActivity.class);
-        startActivity(intRun);
+        intent = new Intent(this, ReportsActivity.class);
+        intent.putExtra("Reports", buttonClicked); //may remove this line once testing complete
+        startActivity(intent);
     }
 
     public void callHelpIntent(){
-        intRun = new Intent(this, HelpActivity.class);
-        startActivity(intRun);
+        intent = new Intent(this, HelpActivity.class);
+        intent.putExtra("Help", buttonClicked); //may remove this line once testing complete
+        startActivity(intent);
     }
 
     public void buttonSetDay(View v) {

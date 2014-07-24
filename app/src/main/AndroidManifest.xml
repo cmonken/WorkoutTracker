@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DayActivity"
+            android:label="@string/title_activity_day" >
+        </activity>
+        <activity
+            android:name=".HelpActivity"
+            android:label="@string/title_activity_help" >
+        </activity>
+        <activity
+            android:name=".ReportsActivity"
+            android:label="@string/title_activity_reports" >
+        </activity>
     </application>
 
 </manifest>
