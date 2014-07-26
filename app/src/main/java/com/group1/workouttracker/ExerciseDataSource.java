@@ -11,7 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-
+import org.w3c.dom.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +23,7 @@ public class ExerciseDataSource {
     private String[] exerciseallcolumns = { MySQLiteHelper.COLUMN_EID, MySQLiteHelper.COLUMN_EXERCISE, MySQLiteHelper.COLUMN_WEEKDAY,
             MySQLiteHelper.COLUMN_REPETITIONS, MySQLiteHelper.COLUMN_NOTES};
 
-
-
-
-
-
-
-    public CommentsDataSource(Context context) {
+    public void CommentsDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
     }
 
@@ -41,7 +35,7 @@ public class ExerciseDataSource {
         dbHelper.close();
     }
 
-    public Comment createComment(String comment) {
+    /*public Comment createComment(String comment) {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
         long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null, values);
@@ -79,5 +73,5 @@ public class ExerciseDataSource {
         comment.setId(cursor.getLong(0));
         comment.setComment(cursor.getString(1));
         return comment;
-    }
+    }*/
 }

@@ -47,10 +47,11 @@ public class MainActivity extends Activity {
         reportsBtn = (Button) findViewById(R.id.button8);
         helpBtn = (Button) findViewById(R.id.button9);
     }
+
         public void myClickHandler(View target) {
             buttonSetDay(target);
-            Toast.makeText(getApplicationContext(), buttonClicked,
-                    Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(getApplicationContext(), buttonClicked,
+                    Toast.LENGTH_SHORT).show();*/ //used for testing
             if(buttonClicked == "Reports" || buttonClicked == "Help") {
                 if(buttonClicked == "Reports") {
                     callReportsIntent();
