@@ -7,42 +7,48 @@ package com.group1.workouttracker;
  * modified to store data required for the WorkoutTracker app
  */
 
+import java.sql.Time;
+import java.util.Date;
+
 public class History {
 
-    private long hid;
-    private String date;
-    private String time;
+    private long id;
+    private Date date;
+    private Time time;
 
-    // constructor
-    public History( long hid, String date, String time){
-        this.hid = hid;
+    // constructors
+    public History( long id, Date date, Time time){
+        this.id = id;
         this.date = date;
         this.time = time;
     }
 
-    // setters
-    public void setHId(long hid) {
-        this.hid = hid;
+    public History(){
     }
 
-    public void setDate(String date) {
+    // setters
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public void setTime(String time) {
+    public void setTime(Time time) {
         this.time = time;
     }
 
     // getters
-    public long getHId() {
-        return hid;
+    public long getId() {
+        return id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public String getTime() {
+    public Time getTime() {
         return time;
     }
 

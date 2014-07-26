@@ -9,37 +9,45 @@ package com.group1.workouttracker;
 
 public class Exercise {
 
-    private long eid;
+    private long id;
     private String exercise;
     private String weekday;
     private long repetitions;
     private String notes;
 
     // constructors
-    public Exercise( long eid, String exercise, String weekday, long repetitions, String notes){
-        this.eid = eid;
+    public Exercise( long id, String exercise, String weekday, long repetitions, String notes){
+        this.id = id;
         this.exercise = exercise;
         this.weekday = weekday;
         this.repetitions = repetitions;
         this.notes = notes;
     }
 
-    public Exercise( long eid, String exercise, String weekday, long repetitions){
-        this.eid = eid;
+    public Exercise( long id, String exercise, String weekday, long repetitions){
+        this.id = id;
         this.exercise = exercise;
         this.weekday = weekday;
         this.repetitions = repetitions;
     }
 
-    public Exercise( long eid, String exercise, String weekday){
-        this.eid = eid;
+    public Exercise( long id, String exercise, String weekday){
+        this.id = id;
         this.exercise = exercise;
         this.weekday = weekday;
     }
 
+    public Exercise( String exercise, String weekday){
+        this.exercise = exercise;
+        this.weekday = weekday;
+    }
+
+    public Exercise(){
+    }
+
     // setters
-    public void setEId(long eid) {
-        this.eid = eid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setExercise(String exercise) {
@@ -50,13 +58,17 @@ public class Exercise {
         this.weekday = weekday;
     }
 
+    public void setRepetitions(long repetitions) {
+        this.repetitions = repetitions;
+    }
+
     public void setNotes(String notes) {
         this.notes = notes;
     }
 
     // getters
-    public long getEId() {
-        return eid;
+    public long getId() {
+        return id;
     }
 
     public String getExercise() {
@@ -67,6 +79,10 @@ public class Exercise {
         return weekday;
     }
 
+    public long getRepetitions() {
+        return repetitions;
+    }
+
     public String getNotes() {
         return notes;
     }
@@ -74,6 +90,6 @@ public class Exercise {
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
-        return notes;
-    }  // need to set toString
+        return exercise + " " + repetitions + " " + notes;
+    }
 }
