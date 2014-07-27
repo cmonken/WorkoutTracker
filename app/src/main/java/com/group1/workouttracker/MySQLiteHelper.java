@@ -29,6 +29,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Table names
+    public static final String TABLE_DAYOFWEEK = "dayofweek";
     public static final String TABLE_EXERCISES = "exercises";
     public static final String TABLE_HAS = "has";
     public static final String TABLE_HISTORY = "history";
@@ -40,6 +41,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPETITIONS = "repetitions";
     public static final String COLUMN_NOTES = "notes";
 
+    // Dayofweek table columns
+    public static final String COLUMN_SUMMARY = "summary";
+
     // Has table columns
     public static final String KEY_HISTORY_ID = "history_id";
     public static final String KEY_EXERCISE_ID = "exercise_id";
@@ -48,6 +52,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     // History table columns
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_COMPLETED_TIME = "time";
+
+
+    // Dayofweek table creation statement
+    private static final String CREATE_DAYOFWEEK_TABLE = "create table if not exists " + TABLE_DAYOFWEEK + "(" + KEY_ID +
+            " integer primary key, " + COLUMN_WEEKDAY + " text, " + COLUMN_SUMMARY + " text);";
 
     // Exercises table creation statement
     private static final String CREATE_EXERCISE_TABLE = "create table if not exists " + TABLE_EXERCISES + "(" + KEY_ID +
@@ -70,6 +79,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         // create required tables
+        database.execSQL(CREATE_DAYOFWEEK_TABLE);
         database.execSQL(CREATE_EXERCISE_TABLE);
         database.execSQL(CREATE_HAS_TABLE);
         database.execSQL(CREATE_HISTORY_TABLE);
@@ -81,6 +91,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             ", which will destroy all old data" );
 
         // on upgrade drop older tables
+        database.execSQL("DROP TABLE IF EXISTS " + TABLE_DAYOFWEEK);
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_HAS);
         database.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
@@ -89,6 +100,72 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
+    /**
+     * DAYOFWEEK_TABLE C.R.U.D.S.
+     */
+
+    public long createSummary(DayOfWeek day) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_WEEKDAY, day.getWeekday());
+        values.put(COLUMN_SUMMARY, day.getSummary());
+
+        // insert row
+        long day_id = database.insert(TABLE_DAYOFWEEK, null, values);
+
+        return day_id;
+    }
+
+    /**
+     * Getting a single dayofweek
+     */
+    public DayOfWeek getDayOfWeek(long dayofweek_id){
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        String selectQuery = "select * from " + TABLE_DAYOFWEEK + " where " + KEY_ID + " = " + dayofweek_id;
+
+        Log.e(LOG, selectQuery);
+
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if ( cursor != null)
+            cursor.moveToFirst();
+
+        DayOfWeek day = new DayOfWeek();
+        day.setId(cursor.getLong(cursor.getColumnIndex(KEY_ID)));
+        day.setWeekday(cursor.getString(cursor.getColumnIndex(COLUMN_WEEKDAY)));
+        day.setSummary(cursor.getString(cursor.getColumnIndex(COLUMN_SUMMARY)));
+
+        return day;
+    }
+
+    /**
+     * Updating an dayofweek's summary
+     */
+    public int updateSummary(DayOfWeek day){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_WEEKDAY, day.getWeekday());
+        values.put(COLUMN_SUMMARY, day.getSummary());
+
+        // updating row
+        return database.update(TABLE_EXERCISES, values, KEY_ID + " = ?", new String[] { String.valueOf(day.getId())});
+    }
+
+    /**
+     * Deleting an dayofweek's summary
+     */
+    public void deleteDayOfWeekSummary(long dayofweek_id){
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete(TABLE_DAYOFWEEK, KEY_ID + " =?", new String[] { String.valueOf(dayofweek_id)});
+    }
+
+
+    /**
+     * EXERCISE_TABLE C.R.U.D.S.
+     */
     public long createExercise(Exercise exercise) {
         SQLiteDatabase database = this.getWritableDatabase();
 
