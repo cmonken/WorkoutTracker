@@ -13,14 +13,31 @@ import java.util.Date;
 public class History {
 
     private long id;
+    private String exercise;
+    private String weekday;
+    private int repetitions;
+    private String notes;
     private Date date;
     private Time time;
 
+
     // constructors
-    public History( long id, Date date, Time time){
+    public History( long id, String exercise, String weekday, int repetitions, String notes, Date date, Time time){
         this.id = id;
+        this.exercise = exercise;
+        this.weekday = weekday;
+        this.repetitions = repetitions;
+        this.notes = notes;
         this.date = date;
         this.time = time;
+    }
+
+    public History( long id, String exercise, String weekday, int repetitions, String notes){
+        this.id = id;
+        this.exercise = exercise;
+        this.weekday = weekday;
+        this.repetitions = repetitions;
+        this.notes = notes;
     }
 
     public History(){
@@ -31,6 +48,22 @@ public class History {
         this.id = id;
     }
 
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
+    }
+
+    public void setWeekday(String weekday) {
+        this.weekday = weekday;
+    }
+
+    public void setRepetitions(int repetitions) {
+        this.repetitions = repetitions;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
@@ -39,9 +72,27 @@ public class History {
         this.time = time;
     }
 
+
+
     // getters
     public long getId() {
         return id;
+    }
+
+    public String getExercise() {
+        return exercise;
+    }
+
+    public String getWeekday() {
+        return weekday;
+    }
+
+    public Integer getRepetitions() {
+        return repetitions;
+    }
+
+    public String getNotes() {
+        return notes;
     }
 
     public Date getDate() {
@@ -55,6 +106,6 @@ public class History {
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
-        return date + ", " + time;
+        return exercise + " " + weekday + " " + repetitions + " " + notes + " " + date + ", " + time;
     }
 }

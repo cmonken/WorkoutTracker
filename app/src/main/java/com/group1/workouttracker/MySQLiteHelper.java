@@ -35,8 +35,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Common column names
     public static final String KEY_ID = "id";
-
-    // Exercise table columns
     public static final String COLUMN_EXERCISE = "exercise";
     public static final String COLUMN_WEEKDAY = "weekday";
     public static final String COLUMN_REPETITIONS = "repetitions";
@@ -62,7 +60,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // History table creation statement
     private static final String CREATE_HISTORY_TABLE = "create table if not exists " + TABLE_HISTORY + "(" + KEY_ID +
-            " integer primary key, " + COLUMN_DATE + " date, " + COLUMN_COMPLETED_TIME + " time);";
+            " integer primary key, " + COLUMN_EXERCISE + " text, " + COLUMN_WEEKDAY + " text, " + COLUMN_REPETITIONS +
+            " integer, " + COLUMN_NOTES + " text, " + COLUMN_DATE + " date, " + COLUMN_COMPLETED_TIME + " time);";
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
