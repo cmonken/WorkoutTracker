@@ -1,5 +1,6 @@
 package com.group1.workouttracker;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,44 +8,65 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class DayActivity extends MainActivity {
+public class DayActivity extends Activity {
 
     String buttonClicked;
-    View target1;
+    View v;
+    Button reportsBtn;
+    Button helpBtn;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
         Intent intent = getIntent();
+        reportsBtn = (Button) findViewById(R.id.button8);
+        helpBtn = (Button) findViewById(R.id.button9);
         /*buttonClicked = intent.getStringExtra("Day");
         callToast();*/ //used for testing
+
+        reportsBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callReportsIntent();
+            }
+        });
+
+        helpBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callHelpIntent();
+            }
+        });
+
     }
 
     public void myClickHandler(View target) {
-        buttonSetDay(target1);
-            /*Toast.makeText(getApplicationContext(), buttonClicked,
-                    Toast.LENGTH_SHORT).show();*/ //used for testing
-        if(buttonClicked == "Reports" || buttonClicked == "Help") {
-            if(buttonClicked == "Reports") {
-                callReportsIntent();
-            }
-            else if(buttonClicked == "Help") {
-                callHelpIntent();
-            }
+        buttonSetDay(target);
+        Toast.makeText(getApplicationContext(), buttonClicked, Toast.LENGTH_SHORT).show();
+        if (buttonClicked == "Reports") {
+            callReportsIntent();
         }
-        else if (buttonClicked == "Back") {
-            callMainIntent();
+        else if (buttonClicked == "Help") {
+            callHelpIntent();
         }
     }
 
-    public void callMainIntent(){
-        intent = new Intent(this, MainActivity.class);
-        //intent.putExtra("Day", buttonClicked);
+    public void callReportsIntent(){
+        intent = new Intent(this, ReportsActivity.class);
+        intent.putExtra("Reports", buttonClicked); //may remove this line once testing complete
+        startActivity(intent);
+    }
+
+    public void callHelpIntent(){
+        intent = new Intent(this, HelpActivity.class);
+        intent.putExtra("Help", buttonClicked); //may remove this line once testing complete
         startActivity(intent);
     }
 
@@ -55,9 +77,6 @@ public class DayActivity extends MainActivity {
                 break;
             case R.id.button9:
                 buttonClicked = "Help";
-                break;
-            case R.id.button10:
-                buttonClicked = "Back";
                 break;
         }
     }

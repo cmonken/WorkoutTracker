@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    Button monBtn;
+    /*Button monBtn;
     Button tueBtn;
     Button wedBtn;
     Button thursBtn;
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     Button satBtn;
     Button sunBtn;
     Button reportsBtn;
-    Button helpBtn;
+    Button helpBtn;*/
     String buttonClicked;
     Intent intent;
     //View v;
@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         //setContentView(R.layout.activity_main);
         setContentView(R.layout.fragment_main);
 
-        monBtn = (Button) findViewById(R.id.button1);
+        /*monBtn = (Button) findViewById(R.id.button1);
         tueBtn = (Button) findViewById(R.id.button2);
         wedBtn = (Button) findViewById(R.id.button3);
         thursBtn = (Button) findViewById(R.id.button4);
@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
         satBtn = (Button) findViewById(R.id.button6);
         sunBtn = (Button) findViewById(R.id.button7);
         reportsBtn = (Button) findViewById(R.id.button8);
-        helpBtn = (Button) findViewById(R.id.button9);
+        helpBtn = (Button) findViewById(R.id.button9);*/
     }
 
         public void myClickHandler(View target) {

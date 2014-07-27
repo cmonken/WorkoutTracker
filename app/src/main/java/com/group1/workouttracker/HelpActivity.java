@@ -1,5 +1,6 @@
 package com.group1.workouttracker;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +13,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
-public class HelpActivity extends MainActivity {
+public class HelpActivity extends Activity {
 
     String buttonClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_main);
+        setContentView(R.layout.fragment_help);
         Intent intent = getIntent();
-        buttonClicked = intent.getStringExtra("Help");
-        callToast();
+        /*buttonClicked = intent.getStringExtra("Help");
+        callToast();*/
     }
 
     @Override
