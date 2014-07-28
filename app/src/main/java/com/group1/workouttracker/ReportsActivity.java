@@ -16,6 +16,7 @@ import android.widget.Toast;
 public class ReportsActivity extends Activity {
 
     String buttonClicked;
+    View target;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,9 @@ public class ReportsActivity extends Activity {
         Intent intent = getIntent();
         /*buttonClicked = intent.getStringExtra("Reports");
         callToast();*/
+    }
+
+    public void myClickHandler(View target) {
     }
 
     @Override
@@ -54,7 +58,7 @@ public class ReportsActivity extends Activity {
         }
     }
 
-    public void callToast(){
+    /*public void callToast(){
         Toast.makeText(getApplicationContext(), "Entered Reports Activity. Button clicked: " + buttonClicked, Toast.LENGTH_LONG).show();
-    }
+    }*/
 }

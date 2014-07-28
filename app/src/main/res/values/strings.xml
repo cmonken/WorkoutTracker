@@ -6,7 +6,7 @@
     <string name="title_activity_reports">Reports</string>
     <string name="title_activity_help">Help</string>
     <string name="action_settings">Settings</string>
-    <string name="test">Monday</string>
+    <string name="button1">Monday</string>
     <string name="button2">Tuesday</string>
     <string name="button3">Wednesday</string>
     <string name="button4">Thursday</string>
@@ -16,5 +16,13 @@
     <string name="button8">Reports</string>
     <string name="button9">Help</string>
     <string name="button10">Back</string>
+
+    <string name="land_button1">M\no\nn\nd\na\ny</string>
+    <string name="land_button2">T\nu\ne\ns\nd\na\ny</string>
+    <string name="land_button3">W\ne\nd\nn\ne\ns\nd\na\ny</string>
+    <string name="land_button4">T\nh\nu\nr\ns\nd\na\ny</string>
+    <string name="land_button5">F\nr\ni\nd\na\ny</string>
+    <string name="land_button6">S\na\nt\nu\nr\nd\na\ny</string>
+    <string name="land_button7">S\nu\nn\nd\na\ny</string>
 
 </resources>
