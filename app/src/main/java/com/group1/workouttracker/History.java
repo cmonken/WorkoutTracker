@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class History {
 
-    private long id;
+    private long _id;
     private String exercise;
     private String weekday;
     private int repetitions;
@@ -23,7 +23,7 @@ public class History {
 
     // constructors
     public History( long id, String exercise, String weekday, int repetitions, String notes, Date date, Time time){
-        this.id = id;
+        this._id = id;
         this.exercise = exercise;
         this.weekday = weekday;
         this.repetitions = repetitions;
@@ -33,7 +33,7 @@ public class History {
     }
 
     public History( long id, String exercise, String weekday, int repetitions, String notes){
-        this.id = id;
+        this._id = id;
         this.exercise = exercise;
         this.weekday = weekday;
         this.repetitions = repetitions;
@@ -45,7 +45,7 @@ public class History {
 
     // setters
     public void setId(long id) {
-        this.id = id;
+        this._id = id;
     }
 
     public void setExercise(String exercise) {
@@ -72,11 +72,9 @@ public class History {
         this.time = time;
     }
 
-
-
     // getters
     public long getId() {
-        return id;
+        return _id;
     }
 
     public String getExercise() {

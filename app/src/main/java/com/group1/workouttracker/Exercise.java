@@ -9,7 +9,7 @@ package com.group1.workouttracker;
 
 public class Exercise {
 
-    private long id;
+    private long _id;
     private String exercise;
     private String weekday;
     private long repetitions;
@@ -17,7 +17,7 @@ public class Exercise {
 
     // constructors
     public Exercise( long id, String exercise, String weekday, long repetitions, String notes){
-        this.id = id;
+        this._id = id;
         this.exercise = exercise;
         this.weekday = weekday;
         this.repetitions = repetitions;
@@ -25,14 +25,14 @@ public class Exercise {
     }
 
     public Exercise( long id, String exercise, String weekday, long repetitions){
-        this.id = id;
+        this._id = id;
         this.exercise = exercise;
         this.weekday = weekday;
         this.repetitions = repetitions;
     }
 
     public Exercise( long id, String exercise, String weekday){
-        this.id = id;
+        this._id = id;
         this.exercise = exercise;
         this.weekday = weekday;
     }
@@ -47,7 +47,7 @@ public class Exercise {
 
     // setters
     public void setId(long id) {
-        this.id = id;
+        this._id = id;
     }
 
     public void setExercise(String exercise) {
@@ -68,7 +68,7 @@ public class Exercise {
 
     // getters
     public long getId() {
-        return id;
+        return _id;
     }
 
     public String getExercise() {

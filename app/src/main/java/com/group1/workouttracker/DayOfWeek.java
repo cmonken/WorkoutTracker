@@ -9,13 +9,13 @@ package com.group1.workouttracker;
 
 public class DayOfWeek {
 
-        private long id;
+        private long _id;
         private String weekday;
         private String summary;
 
         // constructors
         public DayOfWeek ( long id, String weekday, String summary){
-            this.id = id;
+            this._id = id;
             this.weekday = weekday;
             this.summary = summary;
         }
@@ -25,7 +25,7 @@ public class DayOfWeek {
 
         // setters
         public void setId(long id) {
-            this.id = id;
+            this._id = id;
         }
 
         public void setWeekday(String weekday) {
@@ -38,7 +38,7 @@ public class DayOfWeek {
 
         // getters
         public long getId() {
-            return id;
+            return _id;
         }
 
         public String getWeekday() {
