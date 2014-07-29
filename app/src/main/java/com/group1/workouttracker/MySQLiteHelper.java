@@ -45,8 +45,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SUMMARY = "summary";
 
     // Has table columns
-    public static final String KEY_HISTORY_ID = "history_id";
-    public static final String KEY_EXERCISE_ID = "exercise_id";
+    public static final String COLUMN_HISTORY_ID = "history_id";
+    public static final String COLUMN_EXERCISE_ID = "exercise_id";
 
 
     // History table columns
@@ -65,7 +65,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Has table creation statement
     private static final String CREATE_HAS_TABLE = "create table if not exists " + TABLE_HAS + "(" + KEY_ID +
-            " integer primary key, " + KEY_EXERCISE_ID + " integer, " + KEY_HISTORY_ID + " integer);";
+            " integer primary key, " + COLUMN_EXERCISE_ID + " integer, " + COLUMN_HISTORY_ID + " integer);";
 
     // History table creation statement
     private static final String CREATE_HISTORY_TABLE = "create table if not exists " + TABLE_HISTORY + "(" + KEY_ID +
@@ -101,9 +101,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * DAYOFWEEK_TABLE C.R.U.D.S.
+     * DAYOFWEEK_TABLE CRUDs
      */
-
+    // Create a DayOfWeek
     public long createSummary(DayOfWeek day) {
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -117,9 +117,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return day_id;
     }
 
-    /**
-     * Getting a single dayofweek
-     */
+    // Read a single DayOfWeek
     public DayOfWeek getDayOfWeek(long dayofweek_id){
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -140,9 +138,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return day;
     }
 
-    /**
-     * Updating an dayofweek's summary
-     */
+    // Update a DayOfWeek's summary
     public int updateSummary(DayOfWeek day){
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -154,18 +150,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return database.update(TABLE_EXERCISES, values, KEY_ID + " = ?", new String[] { String.valueOf(day.getId())});
     }
 
-    /**
-     * Deleting an dayofweek's summary
-     */
-    public void deleteDayOfWeekSummary(long dayofweek_id){
+    // Delete a DayOfWeek's summary
+    public void deleteSummary(long dayofweek_id){
         SQLiteDatabase database = this.getWritableDatabase();
         database.delete(TABLE_DAYOFWEEK, KEY_ID + " =?", new String[] { String.valueOf(dayofweek_id)});
     }
 
 
     /**
-     * EXERCISE_TABLE C.R.U.D.S.
+     * EXERCISE_TABLE CRUDs
      */
+    // Create an exercise
     public long createExercise(Exercise exercise) {
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -181,9 +176,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return exercise_id;
     }
 
-    /**
-     * get all exercises for a specific day
-     */
+    // Read all exercises for a specific day
     public List<Exercise> getExercisesFor(String weekday){
         List<Exercise> exercises = new ArrayList<Exercise>();
         String selectQuery = "select * from " + TABLE_EXERCISES + " where " + COLUMN_WEEKDAY + " = '" + weekday + "'";
@@ -207,13 +200,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 exercises.add(exercise);
             } while (cursor.moveToNext());
         }
-
         return exercises;
     }
 
-    /**
-     * Updating an exercise
-     */
+    // Update an exercise
     public int updateExercise(Exercise exercise){
         SQLiteDatabase database = this.getWritableDatabase();
 
@@ -227,11 +217,31 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         return database.update(TABLE_EXERCISES, values, KEY_ID + " = ?", new String[] { String.valueOf(exercise.getId())});
     }
 
-    /**
-     * Deleting an exercise
-     */
+    // Delete an exercise
     public void deleteExercise(long exercise_id){
         SQLiteDatabase database = this.getWritableDatabase();
         database.delete(TABLE_EXERCISES, KEY_ID + " =?", new String[] { String.valueOf(exercise_id)});
     }
+
+    /**
+     * HAS_TABLE CRUDs
+     */
+    // Create a has
+
+    // Read all histories for a specific day
+
+    // Update a has
+
+    // Delete a has
+
+    /**
+     * HISTORY_TABLE CRUDs
+     */
+    // Create a history
+
+    // Read all histories for a specific day
+
+    // Update a history
+
+    // Delete a history
 }
