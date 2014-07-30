@@ -35,8 +35,12 @@ public class DayActivity extends Activity {
     private Intent intent;
     private MySQLiteHelper helper;
     private WorkoutDataSource datasource;
-    private ArrayAdapter<Exercise> adapter;
+    //private ArrayAdapter<Exercise> adapter;
+    private ArrayAdapter<String> adapter;
     private ListView myList;
+    //List<Exercise> values;
+    private String[] values;
+    private Exercise newExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +56,60 @@ public class DayActivity extends Activity {
         datasource = new WorkoutDataSource(this); //create new datasource
         datasource.open(); //open the datasource
 
-        ListView myList = (ListView) findViewById(android.R.id.list);
-        TextView excerciseLabel = new TextView(this);
-        //.setText("Add new session...");
-        //listView.addHeaderView(sessionLabel);
+        //Exercise newExercise = new Exercise(1, "pushups", "monday", 3, "I rock at pushups, brah!");
+        //addExercise(newExercise);
+
+        myList = (ListView) findViewById(android.R.id.list);
         //buttonClicked has to be a day to even be in DayActivity
-        List<Exercise> values = datasource.getExercisesFor(buttonClicked);
+        //values = datasource.getExercisesFor(buttonClicked);
 
         // use the SimpleCursorAdapter to show the
         // elements in a ListView
         /*ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, values);*/
+
+        /***Test Code***/
+        /*
+        String[] values = new String[] { "Android List View",
+                "Adapter implementation",
+                "Simple List View In Android",
+                "Create List View Android",
+                "Android Example",
+                "List View Source Code",
+                "List View Array Adapter",
+                "Android Example List View"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
-        myList.setAdapter(adapter); //bind adapter to myList*/
+
+        // Assign adapter to ListView
+        myList.setAdapter(adapter);
+
+        // ListView Item Click Listener
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                // ListView Clicked item index
+                int itemPosition     = position;
+
+                // ListView Clicked item value
+                String  itemValue    = (String) myList.getItemAtPosition(position);
+
+                // Show Alert
+                Toast.makeText(getApplicationContext(),
+                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
+                        .show();
+
+            }
+        });*/
+
+        /***End Test Code***/
+
+        //myList.setAdapter(adapter); //bind adapter to myList
 
         reportsBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -95,15 +141,24 @@ public class DayActivity extends Activity {
         Toast.makeText(getApplicationContext(), buttonClicked, Toast.LENGTH_SHORT).show();
         if (buttonClicked == "Reports") {
             callReportsIntent();
-        } else if (buttonClicked == "Help") {
+        }
+        else if (buttonClicked == "Help") {
             callHelpIntent();
         }
+        else if (buttonClicked == "Add Exercise") {
+            addExercise(newExercise);
+        }
+
     }
 
     public void callReportsIntent() {
         intent = new Intent(this, ReportsActivity.class);
         intent.putExtra("Reports", buttonClicked); //may remove this line once testing complete
         startActivity(intent);
+    }
+
+    public void addExercise(Exercise newExercise) {
+        helper.createExercise(newExercise);
     }
 
     public void callHelpIntent() {
@@ -120,6 +175,9 @@ public class DayActivity extends Activity {
             case R.id.button9:
                 buttonClicked = "Help";
                 break;
+            case R.id.button11:
+                buttonClicked = "Add Exercise";
+                break;
         }
     }
 
@@ -129,7 +187,7 @@ public class DayActivity extends Activity {
         String selectQuery = "SELECT  * FROM contacts";
         SQLiteDatabase db = helper.getWritableDatabase();
         db.
-        Cursor cursor = db.rawQuery(selectQuery, null);
+                Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
@@ -185,6 +243,4 @@ public class DayActivity extends Activity {
         datasource.close();
         super.onPause();
     }
-
-
 }

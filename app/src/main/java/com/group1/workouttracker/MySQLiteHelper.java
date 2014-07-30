@@ -81,13 +81,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         // create required tables
         database.execSQL(CREATE_DAYOFWEEK_TABLE);
         // enter days of the week default entries
-        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(1, 'Monday', 'This is a test')");
+        /*database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(1, 'Monday', 'This is a test')");
         database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(2, 'Tuesday', '')");
         database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(3, 'Wednesday', '')");
         database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(4, 'Thursday', '')");
         database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(5, 'Friday', '')");
         database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(6, 'Saturday', '')");
-        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(7, 'Sunday', '')");
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(7, 'Sunday', '')");*/
         database.execSQL(CREATE_EXERCISE_TABLE);
         database.execSQL(CREATE_HAS_TABLE);
         database.execSQL(CREATE_HISTORY_TABLE);
