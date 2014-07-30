@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView1"
         android:hint="Long press here to add summary"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:layout_gravity="top" />
 
     <ListView
         android:layout_width="match_parent"
