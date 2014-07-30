@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,12 +48,18 @@ public class DayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
+
+        TextView summary = (TextView) findViewById(R.id.textView1);
+        registerForContextMenu(summary);
+
         Intent intent = getIntent();
         helper = new MySQLiteHelper(this);
         reportsBtn = (Button) findViewById(R.id.button8);
         helpBtn = (Button) findViewById(R.id.button9);
         buttonClicked = intent.getStringExtra("Day");
         //callToast(); //used for testing
+
+
 
         datasource = new WorkoutDataSource(this); //create new datasource
         datasource.open(); //open the datasource
@@ -134,6 +142,24 @@ public class DayActivity extends Activity {
                         .show();
             }
         });*/
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Summary");
+        menu.add(0, v.getId(), 0, "Edit");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle()=="Edit"){editSummary(item.getItemId());}
+        else {return false;}
+        return true;
+    }
+
+    public void editSummary(int id){
+        Toast.makeText(this, "function 1 called", Toast.LENGTH_SHORT).show();
     }
 
     public void myClickHandler(View target) {
