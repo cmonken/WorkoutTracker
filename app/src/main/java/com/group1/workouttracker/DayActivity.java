@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import java.util.List;
@@ -52,6 +53,9 @@ public class DayActivity extends Activity {
         datasource.open(); //open the datasource
 
         ListView myList = (ListView) findViewById(android.R.id.list);
+        TextView excerciseLabel = new TextView(this);
+        //.setText("Add new session...");
+        //listView.addHeaderView(sessionLabel);
         //buttonClicked has to be a day to even be in DayActivity
         List<Exercise> values = datasource.getExercisesFor(buttonClicked);
 
