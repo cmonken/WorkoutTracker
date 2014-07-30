@@ -40,8 +40,8 @@ public class DayActivity extends Activity {
     //private ArrayAdapter<Exercise> adapter;
     private ArrayAdapter<String> adapter;
     private ListView myList;
-    //List<Exercise> values;
-    private String[] values;
+    private List<Exercise> values;
+    //private String[] values;
     private Exercise newExercise;
 
     @Override
@@ -58,26 +58,23 @@ public class DayActivity extends Activity {
         helpBtn = (Button) findViewById(R.id.button9);
         buttonClicked = intent.getStringExtra("Day");
         //callToast(); //used for testing
-
-
-
         datasource = new WorkoutDataSource(this); //create new datasource
         datasource.open(); //open the datasource
 
-        //Exercise newExercise = new Exercise(1, "pushups", "monday", 3, "I rock at pushups, brah!");
+        Exercise newExercise = new Exercise(1, "pushups", "Monday", 3, "I rock at pushups, brah!");
         //addExercise(newExercise);
 
         myList = (ListView) findViewById(R.id.listView1);
         //buttonClicked has to be a day to even be in DayActivity
-        //values = datasource.getExercisesFor(buttonClicked);
+        values = datasource.getExercisesFor(buttonClicked);
 
         // use the SimpleCursorAdapter to show the
         // elements in a ListView
-        /*ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);*/
+        ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(this,
+                android.R.layout.simple_list_item_1, values);
 
         /***Test Code***/
-
+        /*
         String[] values = new String[] { "Pushups",
                 "Benchpress",
                 "Pullups",
@@ -110,10 +107,10 @@ public class DayActivity extends Activity {
 
             }
         });
-
+        */
         /***End Test Code***/
 
-        //myList.setAdapter(adapter); //bind adapter to myList
+        myList.setAdapter(adapter); //bind adapter to myList
 
         reportsBtn.setOnClickListener(new OnClickListener() {
             @Override
@@ -168,9 +165,9 @@ public class DayActivity extends Activity {
             callHelpIntent();
         }
         else if (buttonClicked == "Add Exercise") {
-            addExercise(newExercise);
+            //addExercise(newExercise);
+            callAddIntent();
         }
-
     }
 
     public void callReportsIntent() {
@@ -179,13 +176,15 @@ public class DayActivity extends Activity {
         startActivity(intent);
     }
 
-    public void addExercise(Exercise newExercise) {
-        helper.createExercise(newExercise);
-    }
-
     public void callHelpIntent() {
         intent = new Intent(this, HelpActivity.class);
         intent.putExtra("Help", buttonClicked); //may remove this line once testing complete
+        startActivity(intent);
+    }
+
+    public void callAddIntent() {
+        intent = new Intent(this, AddActivity.class);
+        intent.putExtra("Day", buttonClicked);
         startActivity(intent);
     }
 
