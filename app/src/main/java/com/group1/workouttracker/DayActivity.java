@@ -20,6 +20,7 @@ public class DayActivity extends Activity {
     Button reportsBtn;
     Button helpBtn;
     Intent intent;
+    mySQLiteHelper myHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
