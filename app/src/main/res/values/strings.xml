@@ -16,6 +16,7 @@
     <string name="button8">Reports</string>
     <string name="button9">Help</string>
     <string name="button10">Back</string>
+    <string name="button11">Add new exercise</string>
 
     <string name="land_button1">M\no\nn\nd\na\ny</string>
     <string name="land_button2">T\nu\ne\ns\nd\na\ny</string>
@@ -24,5 +25,17 @@
     <string name="land_button5">F\nr\ni\nd\na\ny</string>
     <string name="land_button6">S\na\nt\nu\nr\nd\na\ny</string>
     <string name="land_button7">S\nu\nn\nd\na\ny</string>
+
+    <string-array name="planets_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
+
 
 </resources>
