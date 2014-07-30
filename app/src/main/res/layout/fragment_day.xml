@@ -5,6 +5,13 @@
     android:layout_height="fill_parent"
     android:gravity="bottom">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:hint="Long press here to add summary"
+        android:textSize="16dp" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="314dp"
