@@ -80,6 +80,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         // create required tables
         database.execSQL(CREATE_DAYOFWEEK_TABLE);
+        // enter days of the week default entries
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(1, 'Monday', 'This is a test')");
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(2, 'Tuesday', '')");
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(3, 'Wednesday', '')");
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(4, 'Thursday', '')");
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(5, 'Friday', '')");
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(6, 'Saturday', '')");
+        database.execSQL("(" + KEY_ID + ", " + COLUMN_WEEKDAY + ", " + COLUMN_SUMMARY + ") values(7, 'Sunday', '')");
         database.execSQL(CREATE_EXERCISE_TABLE);
         database.execSQL(CREATE_HAS_TABLE);
         database.execSQL(CREATE_HISTORY_TABLE);
@@ -103,8 +111,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     /**
      * DAYOFWEEK_TABLE CRUDs
      */
-    // Create a DayOfWeek
-    public long createSummary(DayOfWeek day) {
+/*    // Create a DayOfWeek
+    public long createDayOfWeek(DayOfWeek day) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -115,13 +123,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         long day_id = database.insert(TABLE_DAYOFWEEK, null, values);
 
         return day_id;
-    }
+    } */
 
-    // Read a single DayOfWeek
-    public DayOfWeek getDayOfWeek(long dayofweek_id){
+    // Read a DayOfWeek's
+    public DayOfWeek getSummaryFor(String weekday){
         SQLiteDatabase database = this.getReadableDatabase();
 
-        String selectQuery = "select * from " + TABLE_DAYOFWEEK + " where " + KEY_ID + " = " + dayofweek_id;
+        String selectQuery = "select * from " + TABLE_DAYOFWEEK + " where " + COLUMN_WEEKDAY + " = " + weekday;
 
         Log.e(LOG, selectQuery);
 
@@ -143,18 +151,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_WEEKDAY, day.getWeekday());
         values.put(COLUMN_SUMMARY, day.getSummary());
 
         // updating row
         return database.update(TABLE_EXERCISES, values, KEY_ID + " = ?", new String[] { String.valueOf(day.getId())});
     }
 
-    // Delete a DayOfWeek's summary
+/*    // Delete a DayOfWeek's summary
     public void deleteSummary(long dayofweek_id){
         SQLiteDatabase database = this.getWritableDatabase();
         database.delete(TABLE_DAYOFWEEK, KEY_ID + " =?", new String[] { String.valueOf(dayofweek_id)});
-    }
+    } */
 
 
     /**

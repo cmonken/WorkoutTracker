@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +13,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class DayActivity extends Activity {
 
@@ -20,11 +24,16 @@ public class DayActivity extends Activity {
     Button reportsBtn;
     Button helpBtn;
     Intent intent;
+    TextView summary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
+
+        summary = (TextView) findViewById(R.id.textView1);
+        registerForContextMenu(summary);
+
         Intent intent = getIntent();
         reportsBtn = (Button) findViewById(R.id.button8);
         helpBtn = (Button) findViewById(R.id.button9);
@@ -45,6 +54,20 @@ public class DayActivity extends Activity {
             }
         });
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Summary");
+        menu.add(0, v.getId(), 0, "Edit");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle()=="Edit"){editSummary(item.getItemId());}
+        else {return false;}
+        return true;
     }
 
     public void myClickHandler(View target) {
@@ -107,6 +130,10 @@ public class DayActivity extends Activity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
+    }
+
+    public void editSummary(int id){
+        Toast.makeText(this, "function 1 called", Toast.LENGTH_SHORT).show();
     }
 
     public void callToast(){

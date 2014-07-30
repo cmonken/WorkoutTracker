@@ -128,6 +128,18 @@ public class WorkoutDataSource {
         return daysofweek;
     }
 
+    public String getSummaryFor(String weekday){
+
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_DAYOFWEEK,
+                new String[] {MySQLiteHelper.COLUMN_SUMMARY}, MySQLiteHelper.COLUMN_WEEKDAY + " = ?", new String[]{ weekday }, null, null, null);
+
+        cursor.moveToFirst();
+        String summary = cursor.getString(2);
+
+        cursor.close();
+        return summary;
+    }
+
     private DayOfWeek cursorToDayOfWeek(Cursor cursor) {
         DayOfWeek dayofweek = new DayOfWeek();
         dayofweek.setId(cursor.getLong(0));

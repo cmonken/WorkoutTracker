@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:longClickable="true"
+        android:textIsSelectable="false"
+        android:hint="Long press here to enter a summary" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_gravity="bottom"
-        android:gravity="bottom">
+        android:layout_height="fill_parent">
 
-        <Button
-            android:layout_width="100dp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button8"
-            android:id="@+id/button8"
-            android:gravity="center"
-            android:onClick="myClickHandler"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:enabled="true" />
+            android:layout_margin="20dp"
+            android:layout_gravity="bottom"
+            android:gravity="bottom">
 
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/button9"
-            android:id="@+id/button9"
-            android:onClick="myClickHandler"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:enabled="true"
-            android:layout_marginLeft="30dp" />
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/button8"
+                android:id="@+id/button8"
+                android:gravity="center"
+                android:onClick="myClickHandler"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:enabled="true" />
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/button9"
+                android:id="@+id/button9"
+                android:onClick="myClickHandler"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:enabled="true"
+                android:layout_marginLeft="30dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
