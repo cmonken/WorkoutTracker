@@ -67,7 +67,7 @@ public class DayActivity extends Activity {
         //Exercise newExercise = new Exercise(1, "pushups", "monday", 3, "I rock at pushups, brah!");
         //addExercise(newExercise);
 
-        myList = (ListView) findViewById(android.R.id.list);
+        myList = (ListView) findViewById(R.id.listView1);
         //buttonClicked has to be a day to even be in DayActivity
         //values = datasource.getExercisesFor(buttonClicked);
 
@@ -77,15 +77,11 @@ public class DayActivity extends Activity {
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);*/
 
         /***Test Code***/
-        /*
-        String[] values = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View"
+
+        String[] values = new String[] { "Pushups",
+                "Benchpress",
+                "Pullups",
+                "Lateral Rows",
         };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -113,7 +109,7 @@ public class DayActivity extends Activity {
                         .show();
 
             }
-        });*/
+        });
 
         /***End Test Code***/
 
