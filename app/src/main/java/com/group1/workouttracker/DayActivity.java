@@ -48,11 +48,9 @@ public class DayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
-
+        Intent intent = getIntent();
         TextView summary = (TextView) findViewById(R.id.textView1);
         registerForContextMenu(summary);
-
-        Intent intent = getIntent();
         helper = new MySQLiteHelper(this);
         reportsBtn = (Button) findViewById(R.id.button8);
         helpBtn = (Button) findViewById(R.id.button9);
@@ -165,7 +163,6 @@ public class DayActivity extends Activity {
             callHelpIntent();
         }
         else if (buttonClicked == "Add Exercise") {
-            //addExercise(newExercise);
             callAddIntent();
         }
     }

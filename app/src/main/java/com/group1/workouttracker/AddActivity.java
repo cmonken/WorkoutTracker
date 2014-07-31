@@ -10,37 +10,52 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddActivity extends Activity {
 
+    private String dayClicked;
     private String fieldClicked;
     private String name;
-    View target;
+    private int reps;
+    private String notes;
+    private View target;
     private MySQLiteHelper helper;
     private TextView textView;
+    private NumberPicker np;
+    private Exercise newExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add);
         Intent intent = getIntent();
-        /*buttonClicked = intent.getStringExtra("Day");
-        callToast();*/
-        textView = (TextView) findViewById(R.id.textView1);
+        dayClicked = intent.getStringExtra("Day");
+        //callToast();
+        textView = (TextView) findViewById(R.id.editText1);
+        np = (NumberPicker) findViewById(R.id.np);
+        np.setMinValue(0);
+        np.setMaxValue(10);
+        np.setValue(1);
     }
 
-    public void addExercise(Exercise newExercise) {
-        helper.createExercise(newExercise);
+    public void addExercise(Exercise exercise) {
+        Exercise newExercise = new Exercise(1, name, notes, reps);
+        helper.createExercise(exercise);
     }
 
     public void editName() {
         name = textView.getText().toString();
     }
 
+    public void editReps() {
+        reps = np.getValue();
+    }
+
     public void editNotes() {
-        name = textView.getText().toString();
+        notes = textView.getText().toString();
     }
 
     public void myClickHandler(View target) {
@@ -64,6 +79,7 @@ public class AddActivity extends Activity {
                 break;
         }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,5 +111,13 @@ public class AddActivity extends Activity {
 
     public void callToast(){
         Toast.makeText(getApplicationContext(), "Entered Reports Activity. Button clicked: " + fieldClicked, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        editName();
+        editReps();
+        editNotes();
     }
 }

@@ -25,7 +25,8 @@
         android:id="@+id/button11"
         android:text="@string/button11"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        android:onClick="myClickHandler" />
 
     <ListView
         android:layout_width="match_parent"
@@ -69,5 +70,4 @@
 
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
