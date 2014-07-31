@@ -5,7 +5,9 @@ http://www.vogella.com/tutorials/AndroidSQLite/article.html
 package com.group1.workouttracker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,8 +52,8 @@ public class DayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
         Intent intent = getIntent();
-        TextView summary = (TextView) findViewById(R.id.textView1);
-        registerForContextMenu(summary);
+        final TextView summary = (TextView) findViewById(R.id.textView1);
+//        registerForContextMenu(myList);
         helper = new MySQLiteHelper(this);
         reportsBtn = (Button) findViewById(R.id.button8);
         helpBtn = (Button) findViewById(R.id.button9);
@@ -133,24 +136,88 @@ public class DayActivity extends Activity {
                         .show();
             }
         });*/
+        /** setOnLongClickListener code snippet included in David's answer to
+         * http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
+         * modified for use with Workout Tracker
+         */
+        summary.setOnLongClickListener(
+                new View.OnLongClickListener() {
+
+                    @Override
+                    public boolean onLongClick(View v) {
+                        // TODO Auto-generated method stub
+
+                        // get prompts.xml view
+                        LayoutInflater li = LayoutInflater.from(DayActivity.this);
+                        View promptsView = li.inflate(R.layout.prompts, null);
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                DayActivity.this);
+
+                        // set prompts.xml to alertdialog builder
+                        alertDialogBuilder.setView(promptsView);
+
+                        final EditText userInput = (EditText) promptsView
+                                .findViewById(R.id.editTextDialogUserInput);
+
+                        // set dialog message
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(
+                                                    DialogInterface dialog,
+                                                    int id) {
+                                                // get user input and set it to
+                                                // result
+                                                // edit text
+                                                summary.setText(userInput
+                                                        .getText());
+                                            }
+                                        })
+                                .setNegativeButton("Cancel",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(
+                                                    DialogInterface dialog,
+                                                    int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+                        // show it
+                        alertDialog.show();
+
+                        return false;
+                    }
+                });
+
+
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Summary");
+        menu.setHeaderTitle("Exercise Menu");
         menu.add(0, v.getId(), 0, "Edit");
+        menu.add(0, v.getId(), 0, "Delete");
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle()=="Edit"){editSummary(item.getItemId());}
+        if(item.getTitle()=="Edit"){editExercise(item.getItemId());}
+        else if(item.getTitle()=="Delete"){deleteExercise(item.getItemId());}
         else {return false;}
         return true;
     }
 
-    public void editSummary(int id){
-        Toast.makeText(this, "function 1 called", Toast.LENGTH_SHORT).show();
+    public void editExercise(int id){
+        Toast.makeText(this, "Editing exercise", Toast.LENGTH_SHORT).show();
+    }
+    public void deleteExercise(int id){
+        Toast.makeText(this, "Deleting exercise", Toast.LENGTH_SHORT).show();
     }
 
     public void myClickHandler(View target) {

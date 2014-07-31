@@ -41,9 +41,9 @@ public class AddActivity extends Activity {
         np.setValue(1);
     }
 
-    public void addExercise(Exercise exercise) {
+    public void addExercise() {
         Exercise newExercise = new Exercise(1, name, notes, reps);
-        helper.createExercise(exercise);
+        helper.createExercise(newExercise);
     }
 
     public void editName() {
@@ -119,5 +119,6 @@ public class AddActivity extends Activity {
         editName();
         editReps();
         editNotes();
+        addExercise();
     }
 }

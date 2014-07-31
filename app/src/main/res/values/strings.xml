@@ -18,7 +18,6 @@
     <string name="button9">Help</string>
     <string name="button10">Back</string>
     <string name="button11">Add new exercise</string>
-
     <string name="land_button1">M\no\nn\nd\na\ny</string>
     <string name="land_button2">T\nu\ne\ns\nd\na\ny</string>
     <string name="land_button3">W\ne\nd\nn\ne\ns\nd\na\ny</string>
@@ -39,5 +38,6 @@
         <item>Neptune</item>
     </string-array>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
