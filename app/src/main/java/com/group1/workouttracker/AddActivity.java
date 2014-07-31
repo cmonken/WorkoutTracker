@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class AddActivity extends Activity {
 
     private String fieldClicked;
@@ -36,11 +35,19 @@ public class AddActivity extends Activity {
         helper.createExercise(newExercise);
     }
 
+    public void editName() {
+        name = textView.getText().toString();
+    }
+
+    public void editNotes() {
+        name = textView.getText().toString();
+    }
+
     public void myClickHandler(View target) {
         fieldSet(target);
         //Toast.makeText(getApplicationContext(), fieldClicked, Toast.LENGTH_SHORT).show();
-        if (fieldClicked == "Add Exercise") {
-            //editExercise();
+        if (fieldClicked == "Edit") {
+            editName();
         }
         else if (fieldClicked == "Help") {
             //callHelpIntent();
@@ -49,8 +56,11 @@ public class AddActivity extends Activity {
 
     public void fieldSet(View v) {
         switch (v.getId()) {
-            case R.id.textView1:
-                fieldClicked = "Edit";
+            case R.id.editText1:
+                fieldClicked = "Edit Name";
+                break;
+            case R.id.editText3:
+                fieldClicked = "Edit Notes";
                 break;
         }
     }
