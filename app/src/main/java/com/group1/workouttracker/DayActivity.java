@@ -38,7 +38,7 @@ public class DayActivity extends Activity {
     private Button reportsBtn;
     private Button helpBtn;
     private Intent intent;
-    private MySQLiteHelper helper;
+    //private MySQLiteHelper helper;
     private WorkoutDataSource datasource;
     //private ArrayAdapter<Exercise> adapter;
     private ArrayAdapter<String> adapter;
@@ -54,7 +54,7 @@ public class DayActivity extends Activity {
         Intent intent = getIntent();
         final TextView summary = (TextView) findViewById(R.id.textView1);
 //        registerForContextMenu(myList);
-        helper = new MySQLiteHelper(this);
+        //helper = new MySQLiteHelper(this);
         reportsBtn = (Button) findViewById(R.id.button8);
         helpBtn = (Button) findViewById(R.id.button9);
         buttonClicked = intent.getStringExtra("Day");
@@ -127,7 +127,7 @@ public class DayActivity extends Activity {
             }
         });
 
-        /*myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
@@ -135,7 +135,8 @@ public class DayActivity extends Activity {
                         "Click ListItem Number " + position, Toast.LENGTH_LONG)
                         .show();
             }
-        });*/
+        });
+
         /** setOnLongClickListener code snippet included in David's answer to
          * http://stackoverflow.com/questions/19079265/onlongclick-textview-to-edit
          * modified for use with Workout Tracker
@@ -265,25 +266,6 @@ public class DayActivity extends Activity {
                 break;
         }
     }
-
-    /*public List<Exercise> getAllExercises() {
-        ArrayAdapter<Exercise> adapter = (ArrayAdapter<Exercise>) get();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM contacts";
-        SQLiteDatabase db = helper.getWritableDatabase();
-        db.
-                Cursor cursor = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Exercise exercise = new Exercise();
-                exercise.setExercise(cursor.getString(1));
-                // Adding exercise to list
-                exerciseList.add(exercise);
-            } while (cursor.moveToNext());
-        }// return contact list
-        return exerciseList;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
