@@ -28,6 +28,7 @@ public class AddActivity extends Activity {
     private TextView textView3;
     private NumberPicker np;
     private Exercise newExercise;
+    private boolean createExercise;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class AddActivity extends Activity {
         textView1 = (TextView) findViewById(R.id.textView1);
         textView3 = (TextView) findViewById(R.id.textView2);
         np = (NumberPicker) findViewById(R.id.np);
-        np.setMinValue(0);
+        np.setMinValue(1);
         np.setMaxValue(10);
         np.setValue(1);
         helper = new MySQLiteHelper(this);
@@ -55,6 +56,12 @@ public class AddActivity extends Activity {
 
     public void editName() {
         name = textView1.getText().toString();
+        if(name == null) {
+            createExercise = false;
+        }
+        else {
+            createExercise = true;
+        }
     }
 
     public void editReps() {
@@ -65,7 +72,7 @@ public class AddActivity extends Activity {
         notes = textView3.getText().toString();
     }
 
-    /*public void myClickHandler(View target) {
+    public void myClickHandler(View target) {
         fieldSet(target);
         //Toast.makeText(getApplicationContext(), fieldClicked, Toast.LENGTH_SHORT).show();
         if (fieldClicked == "Edit Name") {
@@ -77,7 +84,7 @@ public class AddActivity extends Activity {
         else if (fieldClicked == "Help") {
             //callHelpIntent();
         }
-    }*/
+    }
 
     public void fieldSet(View v) {
         switch (v.getId()) {
@@ -128,7 +135,9 @@ public class AddActivity extends Activity {
         editName();
         editReps();
         editNotes();
-        createExercise();
+        if(createExercise == true) {//check if exercise has been named
+            createExercise();
+        }
         datasource.close();
     }
 
