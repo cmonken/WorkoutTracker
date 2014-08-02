@@ -1,9 +1,8 @@
 package com.group1.workouttracker;
 
 /**
- * Created by chris_000 on 7/28/2014.
- * using code from www.vogella.com/tutorials/AndroidSQLite/article.html
- * modified to store data required for the WorkoutTracker app
+ * Some code adapted from SQLIte tutorial
+ * from www.vogella.com/tutorials/AndroidSQLite/article.html
  */
 
 import java.util.ArrayList;

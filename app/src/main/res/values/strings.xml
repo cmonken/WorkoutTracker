@@ -3,6 +3,29 @@
 
     <string name="app_name">Workout Tracker</string>
     <string name="title_activity_day">Daily View</string>
+
+
+    <string name="add_exercise">Add new exercise</string>
+    <string name="add_summary">Long press here to add summary</string>
+    <string name="delete">Delete</string>
+    <string name="help">Help</string>
+    <string name="reports">Reports</string>
+
+    <string name="mon">Monday</string>
+    <string name="mon_land">M\no\nn\nd\na\ny</string>
+    <string name="tue">Tuesday</string>
+    <string name="tue_land">T\nu\ne\ns\nd\na\ny</string>
+    <string name="wed">Wednesday</string>
+    <string name="wed_land">W\ne\nd\nn\ne\ns\nd\na\ny</string>
+    <string name="thur">Thursday</string>
+    <string name="thu_land">T\nh\nu\nr\ns\nd\na\ny</string>
+    <string name="fri">Friday</string>
+    <string name="fri_land">F\nr\ni\nd\na\ny</string>
+    <string name="sat">Saturday</string>
+    <string name="sat_land">S\na\nt\nu\nr\nd\na\ny</string>
+    <string name="sun">Sunday</string>
+    <string name="sun_land">S\nu\nn\nd\na\ny</string>
+
     <string name="title_activity_reports">Reports</string>
     <string name="title_activity_help">Help</string>
     <string name="title_activity_add">Add</string>

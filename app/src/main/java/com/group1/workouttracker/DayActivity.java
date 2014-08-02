@@ -1,5 +1,6 @@
-/* Some code used adapted from SQLite Tutorial located at
-http://www.vogella.com/tutorials/AndroidSQLite/article.html
+/**
+ *  Some code used adapted from SQLite Tutorial located at
+ *  http://www.vogella.com/tutorials/AndroidSQLite/article.html
  */
 
 package com.group1.workouttracker;
@@ -51,9 +52,10 @@ public class DayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
+
         Intent intent = getIntent();
         final TextView summary = (TextView) findViewById(R.id.textView1);
-//        registerForContextMenu(myList);
+        //registerForContextMenu(myList);
         //helper = new MySQLiteHelper(this);
         reportsBtn = (Button) findViewById(R.id.button8);
         helpBtn = (Button) findViewById(R.id.button9);
@@ -150,7 +152,7 @@ public class DayActivity extends Activity {
 
                         // get prompts.xml view
                         LayoutInflater li = LayoutInflater.from(DayActivity.this);
-                        View promptsView = li.inflate(R.layout.prompts, null);
+                        View promptsView = li.inflate(R.layout.edit_summary_layout, null);
 
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                                 DayActivity.this);
