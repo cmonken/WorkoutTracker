@@ -1,31 +1,22 @@
 package com.group1.workouttracker;
 
+/**
+ *  Some code used adapted from SQLite Tutorials located at
+ *  http://www.vogella.com/tutorials/AndroidSQLite/article.html
+ *  www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/
+ *  and www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
+ */
+
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.os.Build;
-import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-    /*Button monBtn;
-    Button tueBtn;
-    Button wedBtn;
-    Button thursBtn;
-    Button friBtn;
-    Button satBtn;
-    Button sunBtn;
-    Button reportsBtn;
-    Button helpBtn;*/
     String buttonClicked;
     Intent intent;
     //View v;
@@ -34,24 +25,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         setContentView(R.layout.fragment_main);
-
-        /*monBtn = (Button) findViewById(R.id.button1);
-        tueBtn = (Button) findViewById(R.id.button2);
-        wedBtn = (Button) findViewById(R.id.button3);
-        thursBtn = (Button) findViewById(R.id.button4);
-        friBtn = (Button) findViewById(R.id.button5);
-        satBtn = (Button) findViewById(R.id.button6);
-        sunBtn = (Button) findViewById(R.id.button7);
-        reportsBtn = (Button) findViewById(R.id.button8);
-        helpBtn = (Button) findViewById(R.id.button9);*/
     }
 
         public void myClickHandler(View target) {
             buttonSetDay(target);
-            /*Toast.makeText(getApplicationContext(), buttonClicked,
-                    Toast.LENGTH_SHORT).show();*/ //used for testing
+            Toast.makeText(getApplicationContext(), buttonClicked,
+                    Toast.LENGTH_SHORT).show(); //used for testing
             if(buttonClicked == "Reports" || buttonClicked == "Help") {
                 if(buttonClicked == "Reports") {
                     callReportsIntent();

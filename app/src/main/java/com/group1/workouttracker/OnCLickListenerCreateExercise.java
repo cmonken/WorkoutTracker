@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 public class OnClickListenerCreateExercise implements OnClickListener {
 
+    String dayName = "Monday";
+
     @Override
     public void onClick(View view) {
 
@@ -40,28 +42,23 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                             public void onClick(DialogInterface dialog, int id) {
 
                                 String eName = editExerciseName.getText().toString();
-                                String dName = "weekday placeholder";
                                 Integer nReps = editRepetitions.getValue();
                                 String notes = editNotes.getText().toString();
 
                                 ObjectExercise objectExercise = new ObjectExercise();
                                 objectExercise.setExerciseName(eName);
-                                objectExercise.setDayName(dName);
+                                objectExercise.setDayName(dayName);
                                 objectExercise.setNumReps(nReps);
                                 objectExercise.setNotes(notes);
 
-                        /* boolean createSuccessful = new TableControllerStudent(context).create(exercise);
+                        boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
 
                             if(createSuccessful){
                                 Toast.makeText(context, "Exercise was saved.", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();
-                            } */
-
-                                // ((MainActivity) context).countRecords();
-                                // ((MainActivity) context).readRecords();
-
-                                dialog.cancel();
+                            }
+                            dialog.cancel();
                             }
                         }
                 ).show();

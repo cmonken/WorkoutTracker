@@ -1,8 +1,10 @@
 package com.group1.workouttracker;
 
 /**
- * Modified code adapted from SQLite tutorials
- * www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
+ *  Some code used adapted from SQLite Tutorials located at
+ *  http://www.vogella.com/tutorials/AndroidSQLite/article.html
+ *  www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/
+ *  and www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
  */
 
 import java.util.ArrayList;
@@ -36,11 +38,11 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         return createSuccessful;
     }
 
-    public List<ObjectExercise> readExercise() {
+    public List<ObjectExercise> readExercise(String dayName) {
 
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
 
-        String sql = "SELECT * FROM table_exercises ORDER BY _id DESC";
+        String sql = "SELECT * FROM table_exercises WHERE dayname = " + dayName + " ORDER BY _id DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
