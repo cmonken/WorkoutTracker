@@ -29,9 +29,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Common column names
     public static final String KEY_ID = "id";
-    public static final String COLUMN_EXERCISE = "exercise";
-    public static final String COLUMN_WEEKDAY = "weekday";
-    public static final String COLUMN_REPETITIONS = "repetitions";
+    public static final String COLUMN_EXERCISE = "exerciseName";
+    public static final String COLUMN_WEEKDAY = "dayName";
+    public static final String COLUMN_REPETITIONS = "numReps";
     public static final String COLUMN_NOTES = "notes";
 
     // Dayofweek table columns
@@ -70,9 +70,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database) {
+    public void onCreate(SQLiteDatabase db) {
         // create required tables
-        database.execSQL(CREATE_DAYOFWEEK_TABLE);
+        db.execSQL(CREATE_DAYOFWEEK_TABLE);
         // enter days of the week default entries
         Log.e("Monday", "Creating Monday: " + insertWeekday("Monday"));
         Log.e("Tuesday", "Creating Tuesday: " + insertWeekday("Tuesday"));
@@ -81,24 +81,24 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.e("Friday", "Creating Friday: " + insertWeekday("Friday"));
         Log.e("Saturday", "Creating Saturday: " + insertWeekday("Saturday"));
         Log.e("Sunday", "Creating Sunday: " + insertWeekday("Sunday"));
-        database.execSQL(CREATE_EXERCISE_TABLE);
-        database.execSQL(CREATE_HAS_TABLE);
-        database.execSQL(CREATE_HISTORY_TABLE);
+        db.execSQL(CREATE_EXERCISE_TABLE);
+        db.execSQL(CREATE_HAS_TABLE);
+        db.execSQL(CREATE_HISTORY_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(MySQLiteHelper.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion +
             ", which will destroy all old data" );
 
         // on upgrade drop older tables
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_DAYOFWEEK);
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_HAS);
-        database.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAYOFWEEK);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
 
         // create new tables
-        onCreate(database);
+        onCreate(db);
     }
 
     public boolean insertWeekday(String weekday) {
@@ -107,10 +107,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         values.put("weekday", weekday);
 
-        SQLiteDatabase database = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        boolean createSuccessful = database.insert("table_dayofweek", null, values) > 0;
-        database.close();
+        boolean createSuccessful = db.insert("table_dayofweek", null, values) > 0;
+        db.close();
 
         return createSuccessful;
     }

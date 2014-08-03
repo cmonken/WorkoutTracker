@@ -38,7 +38,7 @@
     <NumberPicker
         android:layout_width="125dp"
         android:layout_height="wrap_content"
-        android:id="@+id/npNoReps"
+        android:id="@+id/npNumReps"
         android:baselineAligned="false"
         android:orientation="vertical"
         android:paddingBottom="40dp" />

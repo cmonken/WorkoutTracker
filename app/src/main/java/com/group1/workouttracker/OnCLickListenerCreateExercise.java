@@ -1,8 +1,10 @@
 package com.group1.workouttracker;
 
 /**
- * Some code used adapted from SQLite Tutorial located at
- * http://www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
+ *  Some code used adapted from SQLite Tutorials located at
+ *  http://www.vogella.com/tutorials/AndroidSQLite/article.html
+ *  www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/
+ *  and www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
  */
 
 import android.content.Context;
@@ -15,7 +17,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-public class OnCLickListenerCreateExercise implements OnClickListener {
+public class OnClickListenerCreateExercise implements OnClickListener {
 
     @Override
     public void onClick(View view) {
@@ -23,10 +25,10 @@ public class OnCLickListenerCreateExercise implements OnClickListener {
         final Context context = view.getContext();
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View formElementsView = inflater.inflate(R.layout.add_exercise_form, null, false);
+        View formElementsView = inflater.inflate(R.layout.exercise_input_form, null, false);
 
         final EditText editExerciseName = (EditText) formElementsView.findViewById(R.id.editTextExerciseName);
-        final NumberPicker editRepetitions = (NumberPicker) formElementsView.findViewById(R.id.npNoReps);
+        final NumberPicker editRepetitions = (NumberPicker) formElementsView.findViewById(R.id.npNumReps);
         final EditText editNotes = (EditText) formElementsView.findViewById(R.id.editTextNotes);
 
         new AlertDialog.Builder(context)
@@ -34,35 +36,35 @@ public class OnCLickListenerCreateExercise implements OnClickListener {
                 .setTitle("Create Exercise")
                 .setPositiveButton("Add",
                         new DialogInterface.OnClickListener() {
+
                             public void onClick(DialogInterface dialog, int id) {
 
-                                String exerciseName = editExerciseName.getText().toString();
-                                String weekDay = "weekday placeholder";
-                                Long numReps = ((long) editRepetitions.getValue());
+                                String eName = editExerciseName.getText().toString();
+                                String dName = "weekday placeholder";
+                                Integer nReps = editRepetitions.getValue();
                                 String notes = editNotes.getText().toString();
 
-                                Exercise exercise = new Exercise();
-                                exercise.setExercise(exerciseName);
-                                exercise.setWeekday(weekDay);
-                                exercise.setRepetitions(numReps);
-                                exercise.setNotes(notes);
+                                ObjectExercise objectExercise = new ObjectExercise();
+                                objectExercise.setExerciseName(eName);
+                                objectExercise.setDayName(dName);
+                                objectExercise.setNumReps(nReps);
+                                objectExercise.setNotes(notes);
 
-/*                                boolean createSuccessful = new TableControllerStudent(context).create(exercise);
+                        /* boolean createSuccessful = new TableControllerStudent(context).create(exercise);
 
-                                if(createSuccessful){
-                                    Toast.makeText(context, "Exercise was saved.", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();
-                                } */
+                            if(createSuccessful){
+                                Toast.makeText(context, "Exercise was saved.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();
+                            } */
 
-//                                ((MainActivity) context).countRecords();
-//                                ((MainActivity) context).readRecords();
+                                // ((MainActivity) context).countRecords();
+                                // ((MainActivity) context).readRecords();
 
                                 dialog.cancel();
                             }
-
-                        }).show();
-
+                        }
+                ).show();
     }
 
 }
