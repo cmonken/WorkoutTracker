@@ -20,7 +20,7 @@ import android.widget.Toast;
 public class OnClickListenerCreateExercise implements OnClickListener {
 
     private String dayName = "Monday";
-    private String[] nums;
+    private String[] values;
 
     @Override
     public void onClick(View view) {
@@ -34,12 +34,16 @@ public class OnClickListenerCreateExercise implements OnClickListener {
         final NumberPicker editRepetitions = (NumberPicker) formElementsView.findViewById(R.id.npNumReps);
         final EditText editNotes = (EditText) formElementsView.findViewById(R.id.editTextNotes);
 
-        nums = new String[] {"0", "1"};
-
+        //NumberPicker setup
+        String[] values = new String[5];
+        for(int i = 0; i < values.length; i++){
+            values[i] = Integer.toString(i + 1);
+        }
         editRepetitions.setMinValue(1);
-        editRepetitions.setMinValue(10);
-        editRepetitions.setValue(1);
-        editRepetitions.setWrapSelectorWheel(true);
+        editRepetitions.setMaxValue(5);
+        //editRepetitions.setValue(1);
+        editRepetitions.setDisplayedValues(values);
+        //editRepetitions.setWrapSelectorWheel(true);
 
         new AlertDialog.Builder(context)
                 .setView(formElementsView)

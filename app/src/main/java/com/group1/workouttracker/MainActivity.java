@@ -30,8 +30,8 @@ public class MainActivity extends Activity {
 
         public void myClickHandler(View target) {
             buttonSetDay(target);
-            Toast.makeText(getApplicationContext(), buttonClicked,
-                    Toast.LENGTH_SHORT).show(); //used for testing
+            /*Toast.makeText(getApplicationContext(), buttonClicked,
+                    Toast.LENGTH_SHORT).show(); //used for testing*/
             if(buttonClicked == "Reports" || buttonClicked == "Help") {
                 if(buttonClicked == "Reports") {
                     callReportsIntent();
