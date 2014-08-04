@@ -36,8 +36,8 @@ public class DayActivity extends Activity {
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
         buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise());
 
-        // readSummary(buttonClicked);
-        // readRecords(buttonClicked);
+        readSummary(buttonClicked);
+        readRecords(buttonClicked);
 
         Button reportsBtn = (Button) findViewById(R.id.buttonReports);
         reportsBtn.setOnClickListener(new View.OnClickListener() {
@@ -68,15 +68,15 @@ public class DayActivity extends Activity {
         textViewSummary.setOnLongClickListener(new OnLongClickListenerEditSummary());
     }
 
-    public void readRecords( String buttonClicked) {
+    public void readRecords(String buttonClicked) {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
 
-        List<ObjectExercise> exercises = new MyDatabaseHandler(this).readExercise(buttonClicked);
+        List<ObjectExercise> exercise = new MyDatabaseHandler(this).readExercise(buttonClicked);
 
-        if (exercises.size() > 0) {
+        if (exercise.size() > 0) {
 
-            for (ObjectExercise obj : exercises) {
+            for (ObjectExercise obj : exercise) {
 
                 long id = obj.getId();
                 String exerciseName = obj.getExerciseName();

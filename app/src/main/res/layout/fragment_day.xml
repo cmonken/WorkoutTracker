@@ -61,8 +61,7 @@
     <ScrollView
         android:id="@+id/scrollViewRecords"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/scrollViewExercises" >
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:id="@+id/linearLayoutExercise"

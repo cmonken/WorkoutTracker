@@ -19,13 +19,13 @@ public class MainActivity extends Activity {
 
     String buttonClicked;
     Intent intent;
-    //MySQLiteHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
-        //helper = new MySQLiteHelper(this);
+
+
     }
 
         public void myClickHandler(View target) {

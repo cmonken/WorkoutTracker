@@ -42,7 +42,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
 
-        String sql = "SELECT * FROM table_exercises WHERE dayName = " + dayName + " ORDER BY _id DESC";
+        String sql = "SELECT * FROM table_exercise WHERE dayName = " + dayName + " ORDER BY _id DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
