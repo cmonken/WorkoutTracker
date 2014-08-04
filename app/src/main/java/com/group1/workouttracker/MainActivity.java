@@ -7,19 +7,29 @@ package com.group1.workouttracker;
  *  and www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
  */
 
+import java.util.List;
+
 import android.app.Activity;
+import android.app.ActionBar;
+import android.app.Fragment;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
     String buttonClicked;
     Intent intent;
-    //View v;
+    View v;
     View target;
 
     @Override

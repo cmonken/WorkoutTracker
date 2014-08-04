@@ -1,10 +1,10 @@
 package com.group1.workouttracker;
 
 /**
- * Some code used adapted from SQLite Tutorials located at
- * http://www.vogella.com/tutorials/AndroidSQLite/article.html
- * www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/
- * and www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
+ *  Some code used adapted from SQLite Tutorials located at
+ *  http://www.vogella.com/tutorials/AndroidSQLite/article.html
+ *  www.androidhive.info/2013/09/android-sqlite-database-with-multiple-tables/
+ *  and www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
  */
 
 import android.content.Context;
@@ -51,14 +51,14 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                                 objectExercise.setNumReps(nReps);
                                 objectExercise.setNotes(notes);
 
-                                boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
+                        boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
 
-                                if(createSuccessful){
-                                    Toast.makeText(context, "Exercise was saved.", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();
-                                }
-                                dialog.cancel();
+                            if(createSuccessful){
+                                Toast.makeText(context, "Exercise was saved.", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();
+                            }
+                            dialog.cancel();
                             }
                         }
                 ).show();

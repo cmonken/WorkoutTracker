@@ -32,6 +32,8 @@ public class DayActivity extends Activity {
 
         intent = getIntent();
         buttonClicked = intent.getStringExtra("Day");
+        ObjectDay thisDay = new ObjectDay();
+        thisDay.setDayName(buttonClicked);
 
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
         buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise());

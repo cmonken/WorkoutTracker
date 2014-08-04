@@ -23,12 +23,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     // Table names
     public static final String TABLE_DAYOFWEEK = "table_dayofweek";
+    public static final String TABLE_DAY_HAS_EXERCISES = "table_day_has_exercises";
     public static final String TABLE_EXERCISES = "table_exercises";
-    public static final String TABLE_HAS = "table_has";
+    public static final String TABLE_EXERCISE_HAS_HISTORY = "table_exercise_has_history";
     public static final String TABLE_HISTORY = "table_history";
 
     // Common column names
     public static final String KEY_ID = "id";
+    public static final String COLUMN_EXERCISE_ID = "exercise_id";
     public static final String COLUMN_EXERCISE = "exerciseName";
     public static final String COLUMN_WEEKDAY = "dayName";
     public static final String COLUMN_REPETITIONS = "numReps";
@@ -37,27 +39,31 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     // Dayofweek table columns
     public static final String COLUMN_SUMMARY = "summary";
 
-    // Has table columns
-    public static final String COLUMN_HISTORY_ID = "history_id";
-    public static final String COLUMN_EXERCISE_ID = "exercise_id";
+    // Day Has Exercises table columns
+    public static final String COLUMN_DAY_ID = "day_id";
 
+    // Exercise Has History table columns
+    public static final String COLUMN_HISTORY_ID = "history_id";
 
     // History table columns
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_COMPLETED_TIME = "time";
 
-
     // Dayofweek table creation statement
     private static final String CREATE_DAYOFWEEK_TABLE = "create table if not exists " + TABLE_DAYOFWEEK + "(" + KEY_ID +
             " integer primary key, " + COLUMN_WEEKDAY + " text, " + COLUMN_SUMMARY + " text);";
+
+    // Day Has Exercises table creation statement
+    private static final String CREATE_DAY_HAS_EXERCISES_TABLE = "create table if not exists " + TABLE_DAY_HAS_EXERCISES + "(" + KEY_ID +
+            " integer primary key, " + COLUMN_DAY_ID + " integer, " + COLUMN_EXERCISE_ID + " integer);";
 
     // Exercises table creation statement
     private static final String CREATE_EXERCISE_TABLE = "create table if not exists " + TABLE_EXERCISES + "(" + KEY_ID +
             " integer primary key, " + COLUMN_EXERCISE + " text, " + COLUMN_WEEKDAY + " text, " + COLUMN_REPETITIONS +
             " integer, " + COLUMN_NOTES + " text);";
 
-    // Has table creation statement
-    private static final String CREATE_HAS_TABLE = "create table if not exists " + TABLE_HAS + "(" + KEY_ID +
+    // Exercise Has History table creation statement
+    private static final String CREATE_EXERCISE_HAS_HISTORY_TABLE = "create table if not exists " + TABLE_EXERCISE_HAS_HISTORY + "(" + KEY_ID +
             " integer primary key, " + COLUMN_EXERCISE_ID + " integer, " + COLUMN_HISTORY_ID + " integer);";
 
     // History table creation statement
@@ -81,8 +87,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.e("Friday", "Creating Friday: " + insertWeekday("Friday"));
         Log.e("Saturday", "Creating Saturday: " + insertWeekday("Saturday"));
         Log.e("Sunday", "Creating Sunday: " + insertWeekday("Sunday"));
+        db.execSQL(CREATE_DAY_HAS_EXERCISES_TABLE);
         db.execSQL(CREATE_EXERCISE_TABLE);
-        db.execSQL(CREATE_HAS_TABLE);
+        db.execSQL(CREATE_EXERCISE_HAS_HISTORY_TABLE);
         db.execSQL(CREATE_HISTORY_TABLE);
     }
 
@@ -93,8 +100,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // on upgrade drop older tables
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAYOFWEEK);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY_HAS_EXERCISES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISE_HAS_HISTORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
 
         // create new tables

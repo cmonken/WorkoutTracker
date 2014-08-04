@@ -7,20 +7,20 @@ package com.group1.workouttracker;
  *  and www.codeofaninja.com/2013/02/android-sqlite-tutorial.html
  */
 
-public class ObjectHasRelationship {
+public class ObjectDayHasExercises {
 
     private long id;
+    private long day_id;
     private long exercise_id;
-    private long history_id;
 
     // constructors
-    public ObjectHasRelationship( long id, long e_id, long h_id){
+    public ObjectDayHasExercises( long id, long d_id, long e_id){
         this.id = id;
+        this.day_id = d_id;
         this.exercise_id = e_id;
-        this.history_id = h_id;
     }
 
-    public ObjectHasRelationship(){
+    public ObjectDayHasExercises(){
         // blank constructor
     }
 
@@ -29,12 +29,12 @@ public class ObjectHasRelationship {
         this.id = id;
     }
 
-    public void setExerciseId(long e_id) {
-        this.exercise_id = e_id;
+    public void setDayId(long d_id) {
+        this.day_id = d_id;
     }
 
-    public void setHistoryId(long h_id) {
-        this.history_id = h_id;
+    public void setExerciseId(long e_id) {
+        this.exercise_id = e_id;
     }
 
     // getters
@@ -42,12 +42,12 @@ public class ObjectHasRelationship {
         return this.id;
     }
 
-    public long getExerciseId() {
-        return this.exercise_id;
+    public long getDayId() {
+        return this.day_id;
     }
 
-    public long getHistoryId() {
-        return this.history_id;
+    public long getExerciseId() {
+        return this.exercise_id;
     }
 
 }
