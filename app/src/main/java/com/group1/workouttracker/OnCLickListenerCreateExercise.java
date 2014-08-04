@@ -51,9 +51,9 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                                 objectExercise.setNumReps(nReps);
                                 objectExercise.setNotes(notes);
 
-                        boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
+                         long createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
 
-                            if(createSuccessful){
+                            if(createSuccessful < 1){
                                 Toast.makeText(context, "Exercise was saved.", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();

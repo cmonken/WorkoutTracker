@@ -9,9 +9,13 @@ package com.group1.workouttracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
@@ -77,8 +81,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         // create required tables
         db.execSQL(CREATE_DAYOFWEEK_TABLE);
+        db.execSQL(CREATE_DAY_HAS_EX_TABLE);
+        db.execSQL(CREATE_EXERCISE_TABLE);
+        db.execSQL(CREATE_EX_HAS_HISTORY_TABLE);
+        db.execSQL(CREATE_HISTORY_TABLE);
+
         // enter days of the week default entries
         insertWeekday("Monday", db);
         insertWeekday("Tuesday", db);
@@ -87,10 +97,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         insertWeekday("Friday", db);
         insertWeekday("Saturday", db);
         insertWeekday("Sunday", db);
-        db.execSQL(CREATE_DAY_HAS_EX_TABLE);
-        db.execSQL(CREATE_EXERCISE_TABLE);
-        db.execSQL(CREATE_EX_HAS_HISTORY_TABLE);
-        db.execSQL(CREATE_HISTORY_TABLE);
     }
 
     @Override
@@ -113,6 +119,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_WEEKDAY, dayName);
+        values.put(COLUMN_SUMMARY, "");
         boolean createSuccessful = db.insertWithOnConflict(TABLE_DAY_OF_WEEK, null, values, SQLiteDatabase.CONFLICT_IGNORE) > 0;
         db.close();
 

@@ -15,14 +15,14 @@ public class ObjectHistory {
     private long id;
     private String exerciseName;
     private String dayName;
-    private int numReps;
+    private long numReps;
     private String notes;
-    private Date date;
-    private Time time;
+    private String date;
+    private String time;
 
 
     // constructors
-    public ObjectHistory( long id, String eName, String dName, int nReps, String notes, Date date, Time time){
+    public ObjectHistory( long id, String eName, String dName, long nReps, String notes, String date, String time){
         this.id = id;
         this.exerciseName = eName;
         this.dayName = dName;
@@ -49,7 +49,7 @@ public class ObjectHistory {
         this.dayName = dName;
     }
 
-    public void setNumReps(int nReps) {
+    public void setNumReps(long nReps) {
         this.numReps = nReps;
     }
 
@@ -57,11 +57,11 @@ public class ObjectHistory {
         this.notes = notes;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -78,7 +78,7 @@ public class ObjectHistory {
         return dayName;
     }
 
-    public Integer getNumReps() {
+    public long getNumReps() {
         return numReps;
     }
 
@@ -86,11 +86,11 @@ public class ObjectHistory {
         return notes;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 

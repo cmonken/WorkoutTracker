@@ -25,21 +25,27 @@ public class DayActivity extends Activity {
     private View v;
     private Intent intent;
 
+    MyDatabaseHandler db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
 
+        db = new MyDatabaseHandler(getApplicationContext());
+
         intent = getIntent();
         buttonClicked = intent.getStringExtra("Day");
-        ObjectDay thisDay = new ObjectDay();
-        thisDay.setDayName(buttonClicked);
+
+        String thisSummary = /*db.readSummary(buttonClicked).getSummary()*/ "Text place holder";
+
+        TextView summary = (TextView) findViewById(R.id.textViewSummary);
+        summary.setText(thisSummary);
 
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
         buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise());
 
-        readSummary(buttonClicked);
-        readRecords(buttonClicked);
+        //readRecords(buttonClicked);
 
         Button reportsBtn = (Button) findViewById(R.id.buttonReports);
         reportsBtn.setOnClickListener(new View.OnClickListener() {

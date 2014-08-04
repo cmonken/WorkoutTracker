@@ -8,23 +8,41 @@ package com.group1.workouttracker;
  */
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends Activity {
 
     String buttonClicked;
     Intent intent;
+    MySQLiteHelper db;
+    long test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
 
+        db = new MySQLiteHelper(getApplicationContext());
+        if(db != null){
+            test = 1;
+        }
+        else{
+            test = 0;
+        }
+        Toast.makeText(getApplicationContext(), "" + test,Toast.LENGTH_LONG).show();
+
+//        readRecords();
 
     }
 
@@ -115,6 +133,35 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void readRecords() {
+        LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutRecords);
+        linearLayoutRecords.removeAllViews();
+
+        List<ObjectDay> summaries = new MyDatabaseHandler(this).readAllSummaries();
+
+        if(summaries.size() > 0 ) {
+            for (ObjectDay obj : summaries) {
+                long id = obj.getId();
+                String weekday = obj.getDayName();
+                String summary = obj.getSummary();
+
+                String textViewContents = weekday + " - " + summary;
+
+                TextView textViewLocationItem = new TextView(this);
+                textViewLocationItem.setPadding(0, 10, 0, 10);
+                textViewLocationItem.setText(textViewContents);
+                textViewLocationItem.setTag(""+id);
+            }
+        }
+        else {
+            TextView locationItem = new TextView(this);
+            locationItem.setPadding(8, 8, 8, 8);
+            locationItem.setText("No records yet.");
+
+            linearLayoutRecords.addView(locationItem);
+        }
     }
 
 }

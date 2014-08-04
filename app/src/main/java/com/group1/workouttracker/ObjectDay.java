@@ -10,12 +10,12 @@ package com.group1.workouttracker;
 public class ObjectDay {
 
 
-    private int id;
+    private long id;
     private String dayName;
     private String summary;
 
     // constructors
-    public ObjectDay ( int id, String dName, String summary){
+    public ObjectDay ( long id, String dName, String summary){
         this.id = id;
         this.dayName = dName;
         this.summary = summary;
@@ -26,7 +26,7 @@ public class ObjectDay {
     }
 
     // setters
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -39,7 +39,7 @@ public class ObjectDay {
     }
 
     // getters
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -33,7 +33,7 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.edit_summary_form, null, false);
 
-        final Integer dayId = objectDay.getId();
+        final long dayId = objectDay.getId();
         final String dName = objectDay.getDayName();
         final EditText editTextSummary = (EditText) formElementsView.findViewById(R.id.editTextSummary);
 

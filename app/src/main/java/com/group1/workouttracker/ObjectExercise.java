@@ -12,7 +12,7 @@ public class ObjectExercise {
     private long id;
     private String exerciseName;
     private String dayName;
-    private int numReps;
+    private long numReps;
     private String notes;
 
     // constructors
@@ -41,7 +41,7 @@ public class ObjectExercise {
         this.dayName = dName;
     }
 
-    public void setNumReps(int nReps) {
+    public void setNumReps(long nReps) {
         this.numReps = nReps;
     }
 

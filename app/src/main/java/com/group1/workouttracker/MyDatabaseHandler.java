@@ -14,8 +14,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class MyDatabaseHandler extends MySQLiteHelper {
+
+    private static final String LOG = "";
 
     public MyDatabaseHandler(Context context) {
         super(context);
@@ -23,7 +26,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
 
     // created an exercise and assign day(s) to it
-    public long createExercise(ObjectExercise objectExercise, long[] day_ids) {
+    public long createExercise(ObjectExercise objectExercise) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -37,9 +40,9 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         database.close();
 
         // assign day to exercise
-        for(long day_id : day_ids){
+/*        for(long day_id : day_ids){
             createDayHasExercise(day_id, exercise_id);
-        }
+        } */
 
         return exercise_id;
     }
@@ -157,7 +160,10 @@ public class MyDatabaseHandler extends MySQLiteHelper {
     // get the summary for a specific day
     public ObjectDay readSummary(String dName) {
         SQLiteDatabase db = this.getReadableDatabase();
-        ObjectDay objectDay = null;
+
+        ObjectDay objectDay = new ObjectDay();
+        objectDay.setDayName(dName);
+
         String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = " + dName;
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -167,9 +173,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
             int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID)));
             String summary = cursor.getString(cursor.getColumnIndex(COLUMN_SUMMARY));
 
-            objectDay = new ObjectDay();
             objectDay.setId(id);
-            objectDay.setDayName(dName);
             objectDay.setSummary(summary);
         }
 
@@ -179,24 +183,47 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         return objectDay;
     }
 
+    // update the summary field for a weekday
     public boolean updateSummary(ObjectDay objectDay) {
-
-        ContentValues values = new ContentValues();
-
-        values.put("_id", objectDay.getId());
-        values.put("dayName", objectDay.getDayName());
-        values.put("summary", objectDay.getSummary());
-
-        String where = "_id = ?";
-
-        String[] whereArgs = { Integer.toString(objectDay.getId()) };
-
         SQLiteDatabase db = this.getWritableDatabase();
 
-        boolean updateSuccessful = db.update("table_weekday", values, where, whereArgs) > 0;
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, objectDay.getId());
+        values.put(COLUMN_WEEKDAY, objectDay.getDayName());
+        values.put(COLUMN_SUMMARY, objectDay.getSummary());
+
+        String where = KEY_ID + " = ?";
+
+        String[] whereArgs = { "" + objectDay.getId() };
+
+        boolean updateSuccessful = db.update(TABLE_DAY_OF_WEEK, values, where, whereArgs) > 0;
         db.close();
 
         return updateSuccessful;
+    }
+
+    public List<ObjectDay> readAllSummaries(){
+        List<ObjectDay> summaries = new ArrayList<ObjectDay>();
+        String selectQuery = "SELECT * FROM " + TABLE_DAY_OF_WEEK;
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (c.moveToFirst()){
+            do {
+                ObjectDay day = new ObjectDay();
+                day.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                day.setDayName(c.getString(c.getColumnIndex(COLUMN_WEEKDAY)));
+                day.setSummary(c.getString(c.getColumnIndex(COLUMN_SUMMARY)));
+
+                // adding to summary list
+                summaries.add(day);
+            } while (c.moveToNext());
+        }
+        return summaries;
     }
 
     // create relationship between days and exercises
