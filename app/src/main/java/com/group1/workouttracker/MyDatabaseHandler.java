@@ -25,9 +25,9 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put("exercisename", objectExercise.getExerciseName());
-        values.put("dayname", objectExercise.getDayName());
-        values.put("numreps", objectExercise.getNumReps());
+        values.put("exerciseName", objectExercise.getExerciseName());
+        values.put("dayName", objectExercise.getDayName());
+        values.put("numReps", objectExercise.getNumReps());
         values.put("notes", objectExercise.getNotes());
 
         SQLiteDatabase database = this.getWritableDatabase();
@@ -42,7 +42,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
 
-        String sql = "SELECT * FROM table_exercises WHERE dayname = " + dayName + " ORDER BY _id DESC";
+        String sql = "SELECT * FROM table_exercises WHERE dayName = " + dayName + " ORDER BY _id DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
