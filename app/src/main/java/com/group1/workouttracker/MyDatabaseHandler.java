@@ -21,40 +21,46 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         super(context);
     }
 
-    public boolean createExercise(ObjectExercise objectExercise) {
 
-        ContentValues values = new ContentValues();
-
-        values.put("exerciseName", objectExercise.getExerciseName());
-        values.put("dayName", objectExercise.getDayName());
-        values.put("numReps", objectExercise.getNumReps());
-        values.put("notes", objectExercise.getNotes());
-
+    // created an exercise and assign day(s) to it
+    public long createExercise(ObjectExercise objectExercise, long[] day_ids) {
         SQLiteDatabase database = this.getWritableDatabase();
 
-        boolean createSuccessful = database.insert("table_exercise", null, values) > 0;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_EXERCISE, objectExercise.getExerciseName());
+        values.put(COLUMN_WEEKDAY, objectExercise.getDayName());
+        values.put(COLUMN_REPETITIONS, objectExercise.getNumReps());
+        values.put(COLUMN_NOTES, objectExercise.getNotes());
+
+        // insert exercise in table_exercise
+        long exercise_id = database.insert(TABLE_EXERCISE, null, values);
         database.close();
 
-        return createSuccessful;
+        // assign day to exercise
+        for(long day_id : day_ids){
+            createDayHasExercise(day_id, exercise_id);
+        }
+
+        return exercise_id;
     }
 
-    public List<ObjectExercise> readExercise(String dayName) {
+    public List<ObjectExercise> getAllExercisesByDay(String dayName) {
 
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
 
         String sql = "SELECT * FROM table_exercise WHERE dayName = " + dayName + " ORDER BY _id DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor c = db.rawQuery(sql, null);
 
-        if (cursor.moveToFirst()) {
+        if (c.moveToFirst()) {
             do {
 
-                long id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
-                String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
-                String dName = cursor.getString(cursor.getColumnIndex("dayName"));
-                int nReps = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numReps")));
-                String notes = cursor.getString(cursor.getColumnIndex("notes"));
+                long id = Integer.parseInt(c.getString(c.getColumnIndex("_id")));
+                String eName = c.getString(c.getColumnIndex("exerciseName"));
+                String dName = c.getString(c.getColumnIndex("dayName"));
+                int nReps = Integer.parseInt(c.getString(c.getColumnIndex("numReps")));
+                String notes = c.getString(c.getColumnIndex("notes"));
 
                 ObjectExercise objectExercise = new ObjectExercise();
                 objectExercise.setId(id);
@@ -65,10 +71,10 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
                 exerciseList.add(objectExercise);
 
-            } while (cursor.moveToNext());
+            } while (c.moveToNext());
         }
 
-        cursor.close();
+        c.close();
         db.close();
 
         return exerciseList;
@@ -148,20 +154,18 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         return recordCount;
     }
 
+    // get the summary for a specific day
     public ObjectDay readSummary(String dName) {
-
-        ObjectDay objectDay = null;
-
-        String sql = "SELECT * FROM table_dayofweek WHERE dayName = " + dName;
-
         SQLiteDatabase db = this.getReadableDatabase();
+        ObjectDay objectDay = null;
+        String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = " + dName;
 
         Cursor cursor = db.rawQuery(sql, null);
 
         if (cursor.moveToFirst()) {
 
-            int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
-            String summary = cursor.getString(cursor.getColumnIndex("summary"));
+            int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID)));
+            String summary = cursor.getString(cursor.getColumnIndex(COLUMN_SUMMARY));
 
             objectDay = new ObjectDay();
             objectDay.setId(id);
@@ -193,5 +197,17 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         db.close();
 
         return updateSuccessful;
+    }
+
+    // create relationship between days and exercises
+    public long createDayHasExercise(long day_id, long exercise_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DAY_ID, day_id);
+        values.put(COLUMN_EXERCISE_ID, exercise_id);
+
+        long id = db.insert(TABLE_DAY_HAS_EX, null, values);
+        return id;
     }
 }

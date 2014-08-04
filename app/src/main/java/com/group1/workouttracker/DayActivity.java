@@ -74,7 +74,7 @@ public class DayActivity extends Activity {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
 
-        List<ObjectExercise> exercise = new MyDatabaseHandler(this).readExercise(buttonClicked);
+        List<ObjectExercise> exercise = new MyDatabaseHandler(this).getAllExercisesByDay(buttonClicked);
 
         if (exercise.size() > 0) {
 
