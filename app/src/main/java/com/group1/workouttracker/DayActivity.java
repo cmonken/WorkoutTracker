@@ -45,10 +45,12 @@ public class DayActivity extends Activity {
         intent = getIntent();
         buttonClicked = intent.getStringExtra("Day");
 
-        String thisSummary = db.readSummary(buttonClicked).getSummary();
+        //fix this readSummary
+        //String thisSummary = db.readSummary(buttonClicked).getSummary();
 
         TextView summary = (TextView) findViewById(R.id.textViewSummary);
-        summary.setText(thisSummary);
+        //summary.setText(thisSummary);
+        summary.setText(buttonClicked);
 
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
         buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise(buttonClicked));
@@ -88,7 +90,7 @@ public class DayActivity extends Activity {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
 
-        /*List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
+        List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
 
         if (exercise.size() > 0) {
 
@@ -111,13 +113,13 @@ public class DayActivity extends Activity {
                 linearLayoutRecords.addView(textViewLocationItem);
             }
         }
-        else {*/
+        else {
             TextView locationItem = new TextView(this);
             locationItem.setPadding(8, 8, 8, 8);
             locationItem.setText("No records yet.");
 
             linearLayoutRecords.addView(locationItem);
-        //}
+        }
     }
 
     public void callReportsIntent() {

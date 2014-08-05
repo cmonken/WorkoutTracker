@@ -167,10 +167,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // insert exercise in table_exercise
         long exercise_id = db.insert(TABLE_EXERCISE, null, values);
-        //db.close();
 
         // assign day to exercise
-
         /*for(long day_id : day_ids){
             createDayHasExercise(day_id, exercise_id);
         }*/
@@ -297,8 +295,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Cursor cursor = db.rawQuery(sql, null);
         String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = ?";
         Cursor cursor = db.rawQuery(sql, new String[] { dName });
-
-
 
         if (cursor.moveToFirst()) {
 

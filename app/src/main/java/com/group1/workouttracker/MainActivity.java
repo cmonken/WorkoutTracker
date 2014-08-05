@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
         db = DatabaseHelper.getInstance(this);
-        countRecords();
+        //countRecords();
         //readRecords();
 
     }
