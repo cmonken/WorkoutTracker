@@ -32,18 +32,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
-
-        //db = new MySQLiteHelper(getApplicationContext());
-        /*if(db != null){
-            test = 1;
-        }
-        else{
-            test = 0;
-        }
-        Toast.makeText(getApplicationContext(), "" + test,Toast.LENGTH_LONG).show();*/
-
         countRecords();
-        //readRecords();
+        readRecords();
 
     }
 

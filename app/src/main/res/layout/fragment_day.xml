@@ -3,11 +3,53 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="top"
+        android:gravity="bottom"
         android:clickable="false"
         android:descendantFocusability="blocksDescendants"
         android:focusable="false"
         android:focusableInTouchMode="false">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewSummary"
+        android:hint="@string/textView1"
+        android:textSize="22dp"
+        android:textStyle="italic"
+        android:singleLine="false"
+        android:padding="10dp"
+        android:layout_gravity="center" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonAddExercise"
+        android:text="@string/button11"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:onClick="myClickHandler"
+        android:layout_gravity="center" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.40">
+
+        <ScrollView
+            android:id="@+id/scrollViewRecords"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayoutExercise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+
+    </FrameLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -38,38 +80,5 @@
             android:layout_marginLeft="30dp" />
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonAddExercise"
-        android:text="@string/button11"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:onClick="myClickHandler" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewSummary"
-        android:hint="@string/textView1"
-        android:textSize="22dp"
-        android:textStyle="italic"
-        android:singleLine="false"
-        android:padding="10dp" />
-
-    <ScrollView
-        android:id="@+id/scrollViewRecords"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-
-        <LinearLayout
-            android:id="@+id/linearLayoutExercise"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-        </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>
