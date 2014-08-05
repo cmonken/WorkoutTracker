@@ -8,6 +8,8 @@ package com.group1.workouttracker;
  */
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.AlertDialog;
@@ -19,8 +21,8 @@ import android.widget.Toast;
 
 public class OnClickListenerCreateExercise implements OnClickListener {
 
-    private String dayName = "Monday";
     private String[] values;
+    private String dayClicked;
 
     @Override
     public void onClick(View view) {
@@ -55,26 +57,31 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                                 Integer nReps = editRepetitions.getValue();
                                 String notes = editNotes.getText().toString();
 
-
                                 ObjectExercise objectExercise = new ObjectExercise();
                                 objectExercise.setExerciseName(eName);
-                                //objectExercise.setDayName(dayName);
+                                objectExercise.setDayName(dayClicked);
                                 objectExercise.setNumReps(nReps);
-                                objectExercise.setNotes(notes);
+                                objectExercise.setDayName(notes);
 
                                 //boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
-                                long createSuccessful = MySQLiteHelper.getInstance(context).createExercise(objectExercise);
+                                //long createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
+                                //long createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
+                                long createSuccessful = DatabaseHelper.getInstance(context).createExercise(objectExercise);
 
                                 //if(createSuccessful){
-                                if(createSuccessful > 1){
+                                if (createSuccessful >= 0) {
                                     Toast.makeText(context, "Exercise was saved.", Toast.LENGTH_SHORT).show();
-                                }else{
+                                } else {
                                     Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();
                                 }
                                 dialog.cancel();
                             }
                         }
                 ).show();
+    }
+
+    public OnClickListenerCreateExercise(String dayClicked) {
+        this.dayClicked = dayClicked;
     }
 
 }

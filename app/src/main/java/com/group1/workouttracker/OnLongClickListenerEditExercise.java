@@ -40,7 +40,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
                         else if (item == 1) {
 
-                            boolean deleteSuccessful = MySQLiteHelper.getInstance(context).deleteExercise(id);
+                            boolean deleteSuccessful = DatabaseHelper.getInstance(context).deleteExercise(id);
 
                             if (deleteSuccessful){
                                 Toast.makeText(context, "Exercise was deleted.", Toast.LENGTH_SHORT).show();
@@ -63,7 +63,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
     public void editRecord(final int exerciseId) {
 
-        final MySQLiteHelper db = MySQLiteHelper.getInstance(context);
+        final DatabaseHelper db = DatabaseHelper.getInstance(context);
         ObjectExercise objectExercise = db.readSingleExercise(exerciseId);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -90,7 +90,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
                                 objectExercise.setNumReps(numberPickerNumReps.getValue());
                                 objectExercise.setNotes(editTextNotes.getText().toString());
 
-                                boolean updateSuccessful = MySQLiteHelper.getInstance(context).updateExercise(objectExercise);
+                                boolean updateSuccessful = DatabaseHelper.getInstance(context).updateExercise(objectExercise);
 
                                 if(updateSuccessful){
                                     Toast.makeText(context, "Exercise was updated.", Toast.LENGTH_SHORT).show();

@@ -8,14 +8,22 @@ package com.group1.workouttracker;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.List;
 
 public class DayActivity extends Activity {
@@ -24,28 +32,28 @@ public class DayActivity extends Activity {
     private String buttonClicked;
     private View v;
     private Intent intent;
-
-    MySQLiteHelper db;
+    DatabaseHelper db;
+    OnClickListenerCreateExercise myListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
 
-        db = MySQLiteHelper.getInstance(getApplicationContext());
+        db = DatabaseHelper.getInstance(getApplicationContext());
 
         intent = getIntent();
         buttonClicked = intent.getStringExtra("Day");
 
-        String thisSummary = /*db.readSummary(buttonClicked).getSummary()*/ "Text place holder";
+        String thisSummary = db.readSummary(buttonClicked).getSummary();
 
         TextView summary = (TextView) findViewById(R.id.textViewSummary);
         summary.setText(thisSummary);
 
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
-        buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise());
+        buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise(buttonClicked));
 
-        //readRecords(buttonClicked);
+        readRecords(buttonClicked);
 
         Button reportsBtn = (Button) findViewById(R.id.buttonReports);
         reportsBtn.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +88,7 @@ public class DayActivity extends Activity {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
 
-        List<ObjectExercise> exercise = MySQLiteHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
+        /*List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
 
         if (exercise.size() > 0) {
 
@@ -103,14 +111,13 @@ public class DayActivity extends Activity {
                 linearLayoutRecords.addView(textViewLocationItem);
             }
         }
-
-        else {
+        else {*/
             TextView locationItem = new TextView(this);
             locationItem.setPadding(8, 8, 8, 8);
             locationItem.setText("No records yet.");
 
             linearLayoutRecords.addView(locationItem);
-        }
+        //}
     }
 
     public void callReportsIntent() {

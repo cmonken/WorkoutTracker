@@ -11,15 +11,18 @@ public class ObjectExercise {
 
     private long id;
     private String exerciseName;
-    private long day_id;
+    private String dayName;
+    //private long day_id;
     private long numReps;
     private String notes;
 
     // constructors
-    public ObjectExercise( long id, String eName, long dID, int nReps, String notes){
+    //public ObjectExercise( long id, String eName, long dID, int nReps, String notes){
+    public ObjectExercise( long id, String eName, String dayName, int nReps, String notes){
         this.id = id;
         this.exerciseName = eName;
-        this.day_id = dID;
+        //this.day_id = dID;
+        this.dayName = dayName;
         this.numReps = nReps;
         this.notes = notes;
     }
@@ -37,8 +40,12 @@ public class ObjectExercise {
         this.exerciseName = eName;
     }
 
-    public void setDayID(long dID) {
+    /*public void setDayID(long dID) {
         this.day_id = dID;
+    }*/
+
+    public void setDayName(String dayName) {
+        this.dayName = dayName;
     }
 
     public void setNumReps(long nReps) {
@@ -50,6 +57,7 @@ public class ObjectExercise {
     }
 
     // getters
+
     public long getId() {
         return id;
     }
@@ -58,8 +66,12 @@ public class ObjectExercise {
         return exerciseName;
     }
 
-    public Long getDayID() {
+    /*public Long getDayID() {
         return day_id;
+    }*/
+
+    public String getDayName() {
+        return dayName;
     }
 
     public long getNumReps() {

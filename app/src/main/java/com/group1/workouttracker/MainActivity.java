@@ -8,10 +8,7 @@ package com.group1.workouttracker;
  */
 
 import android.app.Activity;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,26 +21,24 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
+    DatabaseHelper db;
     String buttonClicked;
     Intent intent;
-    MySQLiteHelper db = MySQLiteHelper.getInstance(this);
-
-    long test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
+        db = DatabaseHelper.getInstance(this);
         countRecords();
-        readRecords();
+        //readRecords();
 
     }
 
     public void countRecords() {
-        int recordCount = MySQLiteHelper.getInstance(this).count();
+        //int recordCount = DatabaseHelper.getInstance(this).count();
+        int recordCount = db.count();
         Toast.makeText(getApplicationContext(), "Exercises in DB: " + recordCount, Toast.LENGTH_LONG).show();
-        //TextView textViewRecordCount = (TextView) findViewById(R.id.textViewRecordCount);
-        //textViewRecordCount.setText(recordCount + " records found.");
     }
 
     public void myClickHandler(View target) {
@@ -139,7 +134,7 @@ public class MainActivity extends Activity {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutRecords);
         linearLayoutRecords.removeAllViews();
 
-        List<ObjectDay> summaries = MySQLiteHelper.getInstance(this).readAllSummaries();
+        List<ObjectDay> summaries = DatabaseHelper.getInstance(this).readAllSummaries();
 
         if(summaries.size() > 0 ) {
             for (ObjectDay obj : summaries) {
