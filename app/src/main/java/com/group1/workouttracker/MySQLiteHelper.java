@@ -84,10 +84,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // create required tables
         db.execSQL(CREATE_DAYOFWEEK_TABLE);
-        db.execSQL(CREATE_DAY_HAS_EX_TABLE);
+        //db.execSQL(CREATE_DAY_HAS_EX_TABLE);
         db.execSQL(CREATE_EXERCISE_TABLE);
-        db.execSQL(CREATE_EX_HAS_HISTORY_TABLE);
-        db.execSQL(CREATE_HISTORY_TABLE);
+        //db.execSQL(CREATE_EX_HAS_HISTORY_TABLE);
+        //db.execSQL(CREATE_HISTORY_TABLE);
 
         // enter days of the week default entries
         insertWeekday("Monday", db);
@@ -97,6 +97,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         insertWeekday("Friday", db);
         insertWeekday("Saturday", db);
         insertWeekday("Sunday", db);
+
     }
 
     @Override
@@ -105,11 +106,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             ", which will destroy all old data" );
 
         // on upgrade drop older tables
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY_OF_WEEK);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY_HAS_EX);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY_OF_WEEK);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY_HAS_EX);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISE);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EX_HAS_HIS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_EX_HAS_HIS);
+        //db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
 
         // create new tables
         onCreate(db);
@@ -117,12 +118,22 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     public boolean insertWeekday(String dayName, SQLiteDatabase db) {
 
+        boolean createSuccessful = false;
         ContentValues values = new ContentValues();
         values.put(COLUMN_WEEKDAY, dayName);
         values.put(COLUMN_SUMMARY, "");
-        boolean createSuccessful = db.insertWithOnConflict(TABLE_DAY_OF_WEEK, null, values, SQLiteDatabase.CONFLICT_IGNORE) > 0;
-        db.close();
 
+        try {
+            db = this.getWritableDatabase();
+            synchronized (db) {
+                createSuccessful = db.insertWithOnConflict(TABLE_DAY_OF_WEEK, null, values,
+                        SQLiteDatabase.CONFLICT_IGNORE) > 0;
+            }
+        } finally {
+            if (db!= null && db.isOpen()) {
+                db.close();
+            }
+        }
         return createSuccessful;
     }
 

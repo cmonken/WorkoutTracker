@@ -33,38 +33,46 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_main);
 
-        db = new MySQLiteHelper(getApplicationContext());
-        if(db != null){
+        //db = new MySQLiteHelper(getApplicationContext());
+        /*if(db != null){
             test = 1;
         }
         else{
             test = 0;
         }
-        Toast.makeText(getApplicationContext(), "" + test,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "" + test,Toast.LENGTH_LONG).show();*/
 
-//        readRecords();
+        countRecords();
+        //readRecords();
 
     }
 
-        public void myClickHandler(View target) {
-            buttonSetDay(target);
+    public void countRecords() {
+        int recordCount = new MyDatabaseHandler(this).count();
+        Toast.makeText(getApplicationContext(), "Exercises in DB: " + recordCount, Toast.LENGTH_LONG).show();
+        //TextView textViewRecordCount = (TextView) findViewById(R.id.textViewRecordCount);
+        //textViewRecordCount.setText(recordCount + " records found.");
+    }
+
+    public void myClickHandler(View target) {
+        buttonSetDay(target);
             /*Toast.makeText(getApplicationContext(), buttonClicked,
                     Toast.LENGTH_SHORT).show(); //used for testing*/
-            if(buttonClicked == "Reports" || buttonClicked == "Help") {
-                if(buttonClicked == "Reports") {
-                    callReportsIntent();
-                }
-                else if(buttonClicked == "Help") {
-                    callHelpIntent();
-                }
+        if(buttonClicked == "Reports" || buttonClicked == "Help") {
+            if(buttonClicked == "Reports") {
+                callReportsIntent();
             }
-            else if (buttonClicked == "Monday" || buttonClicked == "Tuesday" ||
-                    buttonClicked == "Wednesday" || buttonClicked == "Thursday" ||
-                    buttonClicked == "Friday" || buttonClicked == "Saturday" ||
-                    buttonClicked == "Sunday") {
-                callDayIntent();
+            else if(buttonClicked == "Help") {
+                callHelpIntent();
             }
         }
+        else if (buttonClicked == "Monday" || buttonClicked == "Tuesday" ||
+                buttonClicked == "Wednesday" || buttonClicked == "Thursday" ||
+                buttonClicked == "Friday" || buttonClicked == "Saturday" ||
+                buttonClicked == "Sunday") {
+            callDayIntent();
+        }
+    }
 
     public void callDayIntent(){
         intent = new Intent(this, DayActivity.class);

@@ -26,12 +26,13 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
 
     // created an exercise and assign day(s) to it
+    //public long createExercise(ObjectExercise objectExercise, long[] day_ids) {
     public long createExercise(ObjectExercise objectExercise) {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISE, objectExercise.getExerciseName());
-        values.put(COLUMN_WEEKDAY, objectExercise.getDayName());
+        //values.put(COLUMN_WEEKDAY, objectExercise.getDayName());
         values.put(COLUMN_REPETITIONS, objectExercise.getNumReps());
         values.put(COLUMN_NOTES, objectExercise.getNotes());
 
@@ -40,9 +41,10 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         database.close();
 
         // assign day to exercise
-/*        for(long day_id : day_ids){
+
+        /*for(long day_id : day_ids){
             createDayHasExercise(day_id, exercise_id);
-        } */
+        }*/
 
         return exercise_id;
     }
@@ -127,7 +129,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
         String where = "_id = ?";
 
-        String[] whereArgs = { Long.toString(objectExercise.getId()) };
+        String[] whereArgs = {Long.toString(objectExercise.getId())};
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -194,7 +196,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
         String where = KEY_ID + " = ?";
 
-        String[] whereArgs = { "" + objectDay.getId() };
+        String[] whereArgs = {"" + objectDay.getId()};
 
         boolean updateSuccessful = db.update(TABLE_DAY_OF_WEEK, values, where, whereArgs) > 0;
         db.close();
@@ -202,7 +204,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         return updateSuccessful;
     }
 
-    public List<ObjectDay> readAllSummaries(){
+    public List<ObjectDay> readAllSummaries() {
         List<ObjectDay> summaries = new ArrayList<ObjectDay>();
         String selectQuery = "SELECT * FROM " + TABLE_DAY_OF_WEEK;
 
@@ -212,7 +214,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
         Cursor c = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
-        if (c.moveToFirst()){
+        if (c.moveToFirst()) {
             do {
                 ObjectDay day = new ObjectDay();
                 day.setId(c.getInt(c.getColumnIndex(KEY_ID)));
@@ -227,7 +229,7 @@ public class MyDatabaseHandler extends MySQLiteHelper {
     }
 
     // create relationship between days and exercises
-    public long createDayHasExercise(long day_id, long exercise_id){
+    public long createDayHasExercise(long day_id, long exercise_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -236,5 +238,23 @@ public class MyDatabaseHandler extends MySQLiteHelper {
 
         long id = db.insert(TABLE_DAY_HAS_EX, null, values);
         return id;
+    }
+
+    public int count() {
+        SQLiteDatabase db = null;
+        int recordCount = 0;
+        try {
+            db = this.getWritableDatabase();
+            synchronized (db) {
+                String sql = "SELECT * FROM table_exercise";
+                recordCount = db.rawQuery(sql, null).getCount();
+            }
+        }
+        finally {
+            if (db != null && db.isOpen()) {
+                db.close();
+            }
+        }
+        return recordCount;
     }
 }
