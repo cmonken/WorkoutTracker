@@ -55,6 +55,7 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                                 Integer nReps = editRepetitions.getValue();
                                 String notes = editNotes.getText().toString();
 
+
                                 ObjectExercise objectExercise = new ObjectExercise();
                                 objectExercise.setExerciseName(eName);
                                 //objectExercise.setDayName(dayName);
@@ -62,7 +63,7 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                                 objectExercise.setNotes(notes);
 
                                 //boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
-                                long createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
+                                long createSuccessful = MySQLiteHelper.getInstance(context).createExercise(objectExercise);
 
                                 //if(createSuccessful){
                                 if(createSuccessful > 1){

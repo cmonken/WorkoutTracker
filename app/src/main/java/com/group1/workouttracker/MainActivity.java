@@ -9,6 +9,7 @@ package com.group1.workouttracker;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -25,7 +26,8 @@ public class MainActivity extends Activity {
 
     String buttonClicked;
     Intent intent;
-    MySQLiteHelper db;
+    MySQLiteHelper db = MySQLiteHelper.getInstance(this);
+
     long test;
 
     @Override
@@ -38,7 +40,7 @@ public class MainActivity extends Activity {
     }
 
     public void countRecords() {
-        int recordCount = new MyDatabaseHandler(this).count();
+        int recordCount = MySQLiteHelper.getInstance(this).count();
         Toast.makeText(getApplicationContext(), "Exercises in DB: " + recordCount, Toast.LENGTH_LONG).show();
         //TextView textViewRecordCount = (TextView) findViewById(R.id.textViewRecordCount);
         //textViewRecordCount.setText(recordCount + " records found.");
@@ -137,7 +139,7 @@ public class MainActivity extends Activity {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutRecords);
         linearLayoutRecords.removeAllViews();
 
-        List<ObjectDay> summaries = new MyDatabaseHandler(this).readAllSummaries();
+        List<ObjectDay> summaries = MySQLiteHelper.getInstance(this).readAllSummaries();
 
         if(summaries.size() > 0 ) {
             for (ObjectDay obj : summaries) {

@@ -40,7 +40,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
                         else if (item == 1) {
 
-                            boolean deleteSuccessful = new MyDatabaseHandler(context).deleteExercise(id);
+                            boolean deleteSuccessful = MySQLiteHelper.getInstance(context).deleteExercise(id);
 
                             if (deleteSuccessful){
                                 Toast.makeText(context, "Exercise was deleted.", Toast.LENGTH_SHORT).show();
@@ -63,8 +63,8 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
     public void editRecord(final int exerciseId) {
 
-        final MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(context);
-        ObjectExercise objectExercise = myDatabaseHandler.readSingleExercise(exerciseId);
+        final MySQLiteHelper db = MySQLiteHelper.getInstance(context);
+        ObjectExercise objectExercise = db.readSingleExercise(exerciseId);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.exercise_input_form, null, false);
@@ -90,7 +90,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
                                 objectExercise.setNumReps(numberPickerNumReps.getValue());
                                 objectExercise.setNotes(editTextNotes.getText().toString());
 
-                                boolean updateSuccessful = myDatabaseHandler.updateExercise(objectExercise);
+                                boolean updateSuccessful = MySQLiteHelper.getInstance(context).updateExercise(objectExercise);
 
                                 if(updateSuccessful){
                                     Toast.makeText(context, "Exercise was updated.", Toast.LENGTH_SHORT).show();

@@ -27,8 +27,8 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
 
         context = view.getContext();
 
-        final MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(context);
-        ObjectDay objectDay = myDatabaseHandler.readSummary(dName);
+        final MySQLiteHelper db = MySQLiteHelper.getInstance(context);
+        ObjectDay objectDay = db.readSummary(dName);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.edit_summary_form, null, false);
@@ -52,7 +52,7 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
                                 objectDay.setDayName(dName);
                                 objectDay.setSummary(editTextSummary.getText().toString());
 
-                                boolean updateSuccessful = myDatabaseHandler.updateSummary(objectDay);
+                                boolean updateSuccessful = MySQLiteHelper.getInstance(context).updateSummary(objectDay);
 
                                 if(updateSuccessful){
                                     Toast.makeText(context, "Summary was updated.", Toast.LENGTH_SHORT).show();
@@ -73,8 +73,8 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
 
     public void editRecord(final String dName) {
 
-        final MyDatabaseHandler myDatabaseHandler = new MyDatabaseHandler(context);
-        ObjectDay objectDay = myDatabaseHandler.readSummary(dName);
+        final MySQLiteHelper db = MySQLiteHelper.getInstance(context);
+        ObjectDay objectDay = db.readSummary(dName);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.edit_summary_form, null, false);

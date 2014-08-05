@@ -25,14 +25,14 @@ public class DayActivity extends Activity {
     private View v;
     private Intent intent;
 
-    MyDatabaseHandler db;
+    MySQLiteHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
 
-        db = new MyDatabaseHandler(getApplicationContext());
+        db = MySQLiteHelper.getInstance(getApplicationContext());
 
         intent = getIntent();
         buttonClicked = intent.getStringExtra("Day");
@@ -80,7 +80,7 @@ public class DayActivity extends Activity {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
 
-        List<ObjectExercise> exercise = new MyDatabaseHandler(this).getAllExercisesByDay(buttonClicked);
+        List<ObjectExercise> exercise = MySQLiteHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
 
         if (exercise.size() > 0) {
 
