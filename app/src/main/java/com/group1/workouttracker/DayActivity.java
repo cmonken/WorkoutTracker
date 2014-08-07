@@ -46,11 +46,12 @@ public class DayActivity extends Activity {
         buttonClicked = intent.getStringExtra("Day");
 
         //fix this readSummary
-        //String thisSummary = db.readSummary(buttonClicked).getSummary();
+        String thisSummary = db.readSummary(buttonClicked).getSummary();
 
         TextView summary = (TextView) findViewById(R.id.textViewSummary);
-        //summary.setText(thisSummary);
-        summary.setText(buttonClicked);
+        summary.setText(thisSummary);
+
+        //summary.setText(buttonClicked); //placeholder while summary not working
 
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
         buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise(buttonClicked));

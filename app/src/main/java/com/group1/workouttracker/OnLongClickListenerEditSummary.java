@@ -60,7 +60,6 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
                                     Toast.makeText(context, "Unable to update summary.", Toast.LENGTH_SHORT).show();
                                 }
 
-                                // ((MainActivity) context).countRecords();
                                 // ((MainActivity) context).readRecords();
 
                                 dialog.cancel();

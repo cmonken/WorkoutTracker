@@ -180,16 +180,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         getReadableDatabase();
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
 
-        String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = ?";
+        // sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = ?";
+        String sql = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + COLUMN_WEEKDAY + " = ?";
         Cursor cursor = db.rawQuery(sql, new String[] { dName });
 
         if (cursor.moveToFirst()) {
             do {
 
                 long id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
+
                 String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
                 //long dID = ((long) Integer.parseInt(cursor.getString(cursor.getColumnIndex("dayID"))));
-                String dayName = cursor.getString(cursor.getColumnIndex("dayID"));
+                //String dayName = cursor.getString(cursor.getColumnIndex("dayID"));
+                String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
                 int nReps = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numReps")));
                 String notes = cursor.getString(cursor.getColumnIndex("notes"));
 
