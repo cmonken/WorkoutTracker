@@ -62,6 +62,8 @@ public class DayActivity extends Activity {
                 callHelpIntent();
             }
         });
+
+
     }
 
     @Override
@@ -70,6 +72,7 @@ public class DayActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
     public void readSummary(String buttonClicked) {
         TextView textViewSummary = (TextView) findViewById(R.id.textViewSummary);

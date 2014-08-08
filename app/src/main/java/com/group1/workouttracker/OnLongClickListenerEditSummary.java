@@ -42,7 +42,7 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
         new AlertDialog.Builder(context).setTitle("Exercise");
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
-                .setTitle("Edit Summary for " + dayClicked + ":")
+                .setTitle("Edit Summary for " + dayClicked)
                 .setPositiveButton("Save Changes",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -62,10 +62,11 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
                                 }
 
                                 // ((MainActivity) context).countRecords();
-                                // ((MainActivity) context).readRecords();
+                                //((DayActivity) context).readRecords(dayClicked);
+                                ((DayActivity) context).readSummary(dayClicked);
 
-                                //dialog.cancel();
-                                dialog.dismiss();
+                                dialog.cancel();
+
                             }
 
                         }).show();
