@@ -182,7 +182,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         getReadableDatabase();
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
 
-        String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = ?";
+        //String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = ?";
+        String sql = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + COLUMN_WEEKDAY + " = ?";
         Cursor cursor = db.rawQuery(sql, new String[] { dName });
 
         if (cursor.moveToFirst()) {
@@ -334,12 +335,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<ObjectDay> readAllSummaries() {
+        getReadableDatabase();
         List<ObjectDay> summaries = new ArrayList<ObjectDay>();
         String selectQuery = "SELECT * FROM " + TABLE_DAY_OF_WEEK;
-
         Log.e(LOG, selectQuery);
-
-        db = getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list

@@ -31,12 +31,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.fragment_main);
         db = DatabaseHelper.getInstance(this);
         countRecords();
-        //readRecords();
+        readRecords();
 
     }
 
     public void countRecords() {
-        //int recordCount = DatabaseHelper.getInstance(this).count();
         int recordCount = db.count();
         Toast.makeText(getApplicationContext(), "Exercises in DB: " + recordCount, Toast.LENGTH_LONG).show();
     }

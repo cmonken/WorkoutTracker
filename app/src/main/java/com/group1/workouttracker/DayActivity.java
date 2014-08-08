@@ -8,32 +8,23 @@ package com.group1.workouttracker;
  */
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.List;
 
 public class DayActivity extends Activity {
     //does not extend ListActivity, so list functions must be called by myList object
 
     private String buttonClicked;
-    private View v;
+    private String thisSummary;
     private Intent intent;
     DatabaseHelper db;
-    OnClickListenerCreateExercise myListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +36,11 @@ public class DayActivity extends Activity {
         intent = getIntent();
         buttonClicked = intent.getStringExtra("Day");
 
-        String thisSummary = db.readSummary(buttonClicked).getSummary();
+        /*thisSummary = db.readSummary(buttonClicked).getSummary();
 
         TextView summary = (TextView) findViewById(R.id.textViewSummary);
-        summary.setText(thisSummary);
+        summary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
+        summary.setText(thisSummary);*/
 
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
         buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise(buttonClicked));
@@ -81,14 +73,14 @@ public class DayActivity extends Activity {
 
     public void readSummary(String buttonClicked) {
         TextView textViewSummary = (TextView) findViewById(R.id.textViewSummary);
-        textViewSummary.setOnLongClickListener(new OnLongClickListenerEditSummary());
+        textViewSummary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
     }
 
     public void readRecords(String buttonClicked) {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
 
-        /*List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
+        List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
 
         if (exercise.size() > 0) {
 
@@ -111,13 +103,13 @@ public class DayActivity extends Activity {
                 linearLayoutRecords.addView(textViewLocationItem);
             }
         }
-        else {*/
+        else {
             TextView locationItem = new TextView(this);
             locationItem.setPadding(8, 8, 8, 8);
             locationItem.setText("No records yet.");
 
             linearLayoutRecords.addView(locationItem);
-        //}
+        }
     }
 
     public void callReportsIntent() {
@@ -142,4 +134,12 @@ public class DayActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        thisSummary = db.readSummary(buttonClicked).getSummary();
+        TextView summary = (TextView) findViewById(R.id.textViewSummary);
+        summary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
+        summary.setText(thisSummary);
+    }
 }
