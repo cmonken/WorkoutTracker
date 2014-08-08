@@ -25,22 +25,25 @@ public class DayActivity extends Activity {
     private String thisSummary;
     private Intent intent;
     DatabaseHelper db;
+    TextView textViewSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
 
+
         db = DatabaseHelper.getInstance(getApplicationContext());
 
         intent = getIntent();
         buttonClicked = intent.getStringExtra("Day");
 
-        /*thisSummary = db.readSummary(buttonClicked).getSummary();
+        thisSummary = db.readSummary(buttonClicked).getSummary();
+        textViewSummary = (TextView) findViewById(R.id.textViewSummary);
 
         TextView summary = (TextView) findViewById(R.id.textViewSummary);
         summary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
-        summary.setText(thisSummary);*/
+        summary.setText(thisSummary);
 
         Button buttonCreateExercise = (Button) findViewById(R.id.buttonAddExercise);
         buttonCreateExercise.setOnClickListener(new OnClickListenerCreateExercise(buttonClicked));
@@ -63,7 +66,10 @@ public class DayActivity extends Activity {
             }
         });
 
+    }
 
+    public void passThrough(ObjectDay objDay) {
+        textViewSummary.setText(objDay.getSummary());
     }
 
     @Override
@@ -75,7 +81,7 @@ public class DayActivity extends Activity {
 
 
     public void readSummary(String buttonClicked) {
-        TextView textViewSummary = (TextView) findViewById(R.id.textViewSummary);
+        //TextView textViewSummary = (TextView) findViewById(R.id.textViewSummary);
         textViewSummary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
     }
 
@@ -137,12 +143,4 @@ public class DayActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        thisSummary = db.readSummary(buttonClicked).getSummary();
-        TextView summary = (TextView) findViewById(R.id.textViewSummary);
-        summary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
-        summary.setText(thisSummary);
-    }
 }
