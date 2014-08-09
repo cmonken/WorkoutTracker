@@ -21,6 +21,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
     Context context;
     String id;
+    private String dayClicked;
 
     @Override
     public boolean onLongClick(View view) {
@@ -36,15 +37,13 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
                         if (item == 0) {
                             editRecord(Integer.parseInt(id));
-                        }
-
-                        else if (item == 1) {
+                        } else if (item == 1) {
 
                             boolean deleteSuccessful = DatabaseHelper.getInstance(context).deleteExercise(id);
 
-                            if (deleteSuccessful){
+                            if (deleteSuccessful) {
                                 Toast.makeText(context, "Exercise was deleted.", Toast.LENGTH_SHORT).show();
-                            }else{
+                            } else {
                                 Toast.makeText(context, "Unable to delete exercise.", Toast.LENGTH_SHORT).show();
                             }
 
@@ -52,7 +51,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
                             // ((MainActivity) context).readRecords();
 
                         }
-
+                        ((DayActivity) context).refreshView(dayClicked);
                         dialog.dismiss();
 
                     }
@@ -70,12 +69,23 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
         final View formElementsView = inflater.inflate(R.layout.exercise_input_form, null, false);
 
         final EditText editTextExerciseName = (EditText) formElementsView.findViewById(R.id.editTextExerciseName);
-        final NumberPicker numberPickerNumReps = (NumberPicker) formElementsView.findViewById(R.id.npNumReps);
+        final NumberPicker editRepetitions = (NumberPicker) formElementsView.findViewById(R.id.npNumReps);
         final EditText editTextNotes = (EditText) formElementsView.findViewById(R.id.editTextNotes);
 
+        //NumberPicker setup
+        String[] values = new String[5];
+        for(int i = 0; i < values.length; i++){
+            values[i] = Integer.toString(i + 1);
+        }
+
         editTextExerciseName.setText(objectExercise.getExerciseName());
-        numberPickerNumReps.setValue((int) objectExercise.getNumReps());
+        editRepetitions.setValue(objectExercise.getNumReps());
         editTextNotes.setText(objectExercise.getNotes());
+
+        editRepetitions.setMinValue(1);
+        editRepetitions.setMaxValue(5);
+        editRepetitions.setDisplayedValues(values);
+        editRepetitions.setValue(3);
 
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
@@ -86,25 +96,29 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
                                 ObjectExercise objectExercise = new ObjectExercise();
                                 objectExercise.setId(exerciseId);
+                                objectExercise.setDayName(dayClicked);
                                 objectExercise.setExerciseName(editTextExerciseName.getText().toString());
-                                objectExercise.setNumReps(numberPickerNumReps.getValue());
+                                objectExercise.setNumReps(editRepetitions.getValue());
                                 objectExercise.setNotes(editTextNotes.getText().toString());
 
                                 boolean updateSuccessful = DatabaseHelper.getInstance(context).updateExercise(objectExercise);
 
-                                if(updateSuccessful){
+                                if (updateSuccessful) {
                                     Toast.makeText(context, "Exercise was updated.", Toast.LENGTH_SHORT).show();
-                                }else{
+                                } else {
                                     Toast.makeText(context, "Unable to update exercise.", Toast.LENGTH_SHORT).show();
                                 }
 
-                                // ((MainActivity) context).countRecords();
-                                // ((MainActivity) context).readRecords();
-
-                                dialog.cancel();
+                                ((DayActivity) context).refreshView(dayClicked);
+                                dialog.dismiss();
                             }
 
-                        }).show();
+                        }
+                ).show();
+    }
+
+    public OnLongClickListenerEditExercise(String dayClicked) {
+        this.dayClicked = dayClicked;
     }
 
 }

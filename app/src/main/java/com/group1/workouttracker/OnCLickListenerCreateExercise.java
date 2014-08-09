@@ -37,25 +37,6 @@ public class OnClickListenerCreateExercise implements OnClickListener {
         final NumberPicker editRepetitions = (NumberPicker) formElementsView.findViewById(R.id.npNumReps);
         final EditText editNotes = (EditText) formElementsView.findViewById(R.id.editTextNotes);
 
-        editNotes.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
-
-                            return true;
-                        default:
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
-
         //NumberPicker setup
         String[] values = new String[5];
         for(int i = 0; i < values.length; i++){
@@ -64,6 +45,7 @@ public class OnClickListenerCreateExercise implements OnClickListener {
         editRepetitions.setMinValue(1);
         editRepetitions.setMaxValue(5);
         editRepetitions.setDisplayedValues(values);
+        editRepetitions.setValue(3);
 
         new AlertDialog.Builder(context)
                 .setView(formElementsView)
@@ -81,12 +63,12 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                                 objectExercise.setExerciseName(eName);
                                 objectExercise.setDayName(dayClicked);
                                 objectExercise.setNumReps(nReps);
-                                objectExercise.setDayName(notes);
+                                objectExercise.setNotes(notes);
 
                                 //boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
                                 //long createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
                                 //long createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);
-                                long createSuccessful = DatabaseHelper.getInstance(context).createExercise(objectExercise);
+                                int createSuccessful = DatabaseHelper.getInstance(context).createExercise(objectExercise);
 
                                 //if(createSuccessful){
                                 if (createSuccessful >= 0) {
@@ -94,7 +76,8 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                                 } else {
                                     Toast.makeText(context, "Unable to save exercise.", Toast.LENGTH_SHORT).show();
                                 }
-                                dialog.cancel();
+                                ((DayActivity) context).refreshView(dayClicked);
+                                dialog.dismiss();
                             }
                         }
                 ).show();

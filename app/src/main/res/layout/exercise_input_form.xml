@@ -28,22 +28,6 @@
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="# of Reps"
-        android:id="@+id/textViewNoRepsLabel"
-        android:paddingTop="25dp"
-        android:textSize="25dp" />
-
-    <NumberPicker
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/npNumReps"
-        android:baselineAligned="false"
-        android:orientation="vertical"
-        android:paddingBottom="40dp" />
-
     <EditText
         android:id="@+id/editTextNotes"
         android:layout_width="match_parent"
@@ -52,11 +36,23 @@
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
         android:singleLine="true"
-        android:hint="Notes" />
+        android:hint="Notes"
+        android:selectAllOnFocus="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="# of Reps"
+        android:id="@+id/textViewNoRepsLabel"
+        android:paddingTop="25dp"
+        android:textSize="18dp" />
 
-
-
+    <NumberPicker
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/npNumReps"
+        android:baselineAligned="false"
+        android:orientation="vertical" />
 
 
 </LinearLayout>

@@ -142,8 +142,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /****************************** Begin MyDatabaseHandler Code **********************************/
 
     // created an exercise and assign day(s) to it
-    //public long createExercise(ObjectExercise objectExercise, long[] day_ids) {
-    public long createExercise(ObjectExercise objectExercise) {
+    //public int createExercise(ObjectExercise objectExercise, int[] day_ids) {
+    public int createExercise(ObjectExercise objectExercise) {
         getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -153,8 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_NOTES, objectExercise.getNotes());
 
         // insert exercise in table_exercise
-        long exercise_id = db.insert(TABLE_EXERCISE, null, values);
-        //db.close();
+        int exercise_id = (int)(db.insert(TABLE_EXERCISE, null, values));
 
         return exercise_id;
     }
@@ -169,7 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                long id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
                 String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
                 String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
                 int nReps = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numReps")));
@@ -193,16 +192,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exerciseList;
     }
 
-    public ObjectExercise readSingleExercise(long id) {
+    public ObjectExercise readSingleExercise(int id) {
         getReadableDatabase();
         ObjectExercise objectExercise = null;
         String sql = "SELECT * FROM table_exercise WHERE _id = " + id;
         Cursor cursor = db.rawQuery(sql, null);
 
         if (cursor.moveToFirst()) {
-            long _id = ((long) Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id"))));
+            int _id = (Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id"))));
             String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
-            String dayName = cursor.getString(cursor.getColumnIndex("dayID"));
+            String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
             Integer nReps = cursor.getInt(cursor.getColumnIndex("numReps"));
             String notes = cursor.getString(cursor.getColumnIndex("notes"));
 
@@ -229,7 +228,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String where = "_id = ?";
 
-        String[] whereArgs = {Long.toString(objectExercise.getId())};
+        String[] whereArgs = {Integer.toString(objectExercise.getId())};
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -326,14 +325,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // create relationship between days and exercises
-/*    public long createDayHasExercise(long day_id, long exercise_id) {
+/*    public int createDayHasExercise(int day_id, int exercise_id) {
         db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_DAY_ID, day_id);
         values.put(COLUMN_EXERCISE_ID, exercise_id);
 
-        long id = db.insert(TABLE_DAY_HAS_EX, null, values);
+        int id = db.insert(TABLE_DAY_HAS_EX, null, values);
         return id;
     } */
 

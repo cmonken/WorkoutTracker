@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
@@ -34,8 +35,10 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
         final View formElementsView = inflater.inflate(R.layout.edit_summary_form, null, false);
 
         final long dayId = objectDay.getId();
-        final String dName = objectDay.getDayName();
+        final String dayName = objectDay.getDayName();
         final EditText editTextSummary = (EditText) formElementsView.findViewById(R.id.editTextSummary);
+
+        editTextSummary.setText(objectDay.getSummary());
 
         final CharSequence[] items = { "Edit", "Delete" };
 
@@ -49,7 +52,7 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
 
                                 ObjectDay objectDay = new ObjectDay();
                                 objectDay.setId(dayId);
-                                objectDay.setDayName(dName);
+                                objectDay.setDayName(dayName);
                                 objectDay.setSummary(editTextSummary.getText().toString());
 
                                 boolean updateSuccessful = DatabaseHelper.getInstance(context).updateSummary(objectDay);
@@ -61,20 +64,18 @@ public class OnLongClickListenerEditSummary implements View.OnLongClickListener 
                                     Toast.makeText(context, "Unable to update summary.", Toast.LENGTH_SHORT).show();
                                 }
 
-                                ((DayActivity) context).passThrough(objectDay);
-                                dialog.cancel();
+                                ((DayActivity) context).passThroughSummary(objectDay);
+                                dialog.dismiss();
 
                             }
-
                         }).show();
-
         return false;
     }
 
-    public void editRecord(final String dName) {
+    public void editRecord(final String dayName) {
 
         final DatabaseHelper db = DatabaseHelper.getInstance(context);
-        ObjectDay objectDay = db.readSummary(dName);
+        ObjectDay objectDay = db.readSummary(dayName);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View formElementsView = inflater.inflate(R.layout.edit_summary_form, null, false);

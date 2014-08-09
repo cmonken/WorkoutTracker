@@ -62,7 +62,8 @@
             android:text="@string/land_button6"
             android:id="@+id/button6"
             android:layout_gravity="center"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            android:onClick="myClickHandler" />
 
         <Button
             android:layout_width="50dp"

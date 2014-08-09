@@ -15,7 +15,7 @@
         android:id="@+id/textViewSummary"
         android:hint="@string/textView1"
         android:gravity="center_horizontal"
-        android:textSize="22dp"
+        android:textSize="20dp"
         android:textStyle="italic"
         android:singleLine="false"
         android:padding="10dp"
@@ -33,6 +33,37 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Exercise"
+            android:id="@+id/textView2"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Reps"
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal|top" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Notes"
+            android:id="@+id/textView4"
+            android:layout_gravity="right|top"
+            android:layout_marginRight="30dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.40">
 
@@ -41,14 +72,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutExercise"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-            </LinearLayout>
         </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutExercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="right"
+            android:layout_gravity="center_horizontal|top">
+
+        </LinearLayout>
 
     </FrameLayout>
 

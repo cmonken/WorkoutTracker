@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import java.util.List;
 
@@ -66,8 +68,16 @@ public class DayActivity extends Activity {
 
     }
 
-    public void passThrough(ObjectDay objDay) {
-        textViewSummary.setText(objDay.getSummary());
+    public void passThroughSummary(ObjectDay obj) {
+        textViewSummary.setText(obj.getSummary());
+    }
+
+    /*public void passThroughExercise(ObjectExercise obj) {
+        readRecords(obj.getDayName());
+    }*///replaced with function below -- delete soon
+
+    public void refreshView(String dayName) {
+        readRecords(dayName);
     }
 
     @Override
@@ -78,12 +88,13 @@ public class DayActivity extends Activity {
     }
 
 
-/*    public void readSummary(String buttonClicked) {
+     public void readSummary(String buttonClicked) {
         //TextView textViewSummary = (TextView) findViewById(R.id.textViewSummary);
         textViewSummary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
-    }  */
+    }
 
     public void readRecords(String buttonClicked) {
+        boolean titlePrinted = false;
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
 
@@ -93,26 +104,36 @@ public class DayActivity extends Activity {
 
             for (ObjectExercise obj : exercise) {
 
-                long id = obj.getId();
+                int id = obj.getId();
                 String exerciseName = obj.getExerciseName();
-                long numReps = obj.getNumReps();
+                int numReps = obj.getNumReps();
                 String notes = obj.getNotes();
 
-                String textViewContents = exerciseName + ", # Reps: " + numReps + "  Notes: " + notes;
+                //String textViewContents = exerciseName + ", # Reps: " + numReps + "  Notes: " + notes;
+                String textViewContents = exerciseName + "\t" + numReps + "\t" + notes;
 
                 TextView textViewLocationItem = new TextView(this);
-                textViewLocationItem.setPadding(0, 10, 0, 10);
+                textViewLocationItem.setPadding(10, 10, 10, 10);
                 textViewLocationItem.setText(textViewContents);
-                textViewLocationItem.setTag(Integer.toString((int) id));
+                textViewLocationItem.setTag(Integer.toString(id));
+                textViewLocationItem.setTextSize(16);
 
-                textViewLocationItem.setOnLongClickListener(new OnLongClickListenerEditExercise());
+                Switch isComplete = new Switch(this);
+                isComplete.setText("Done");
+                isComplete.setTextOn("Yes");
+                isComplete.setTextOff("No");
+                isComplete.setGravity(0x05);
+                //http://developer.android.com/reference/android/widget/TextView.html#attr_android:gravity
+
+                textViewLocationItem.setOnLongClickListener(new OnLongClickListenerEditExercise(buttonClicked));
 
                 linearLayoutRecords.addView(textViewLocationItem);
+                linearLayoutRecords.addView(isComplete);
             }
         }
         else {
             TextView locationItem = new TextView(this);
-            locationItem.setPadding(8, 8, 8, 8);
+            locationItem.setPadding(10, 10, 10, 10);
             locationItem.setText("No records yet.");
 
             linearLayoutRecords.addView(locationItem);

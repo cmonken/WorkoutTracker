@@ -23,8 +23,8 @@
         android:id="@+id/editTextSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+        <!-- android:selectAllOnFocus="true" > Selects all text, but keyboard won't show anyway yet-->
 
-        <requestFocus />
     </EditText>
 
 </LinearLayout>

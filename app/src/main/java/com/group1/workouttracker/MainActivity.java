@@ -131,7 +131,7 @@ public class MainActivity extends Activity {
 
     public void readRecords() {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutRecords);
-        linearLayoutRecords.removeAllViews();
+        //linearLayoutRecords.removeAllViews(); //commented out due to crashing. not sure if needed
 
         List<ObjectDay> summaries = DatabaseHelper.getInstance(this).readAllSummaries();
 

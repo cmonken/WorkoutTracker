@@ -9,22 +9,24 @@ package com.group1.workouttracker;
 
 public class ObjectExercise {
 
-    private long id;
+    private int id;
     private String exerciseName;
     private String dayName;
-    //private long day_id;
-    private long numReps;
+    //private int day_id;
+    private int numReps;
     private String notes;
+    private boolean isCompleted;
 
     // constructors
-    //public ObjectExercise( long id, String eName, long dID, int nReps, String notes){
-    public ObjectExercise( long id, String eName, String dayName, int nReps, String notes){
+    //public ObjectExercise( int id, String eName, int dID, int nReps, String notes){
+    public ObjectExercise( int id, String eName, String dayName, int nReps, String notes){
         this.id = id;
         this.exerciseName = eName;
         //this.day_id = dID;
         this.dayName = dayName;
         this.numReps = nReps;
         this.notes = notes;
+        isCompleted = false;
     }
 
     public ObjectExercise(){
@@ -32,7 +34,7 @@ public class ObjectExercise {
     }
 
     // setters
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,7 +42,7 @@ public class ObjectExercise {
         this.exerciseName = eName;
     }
 
-    /*public void setDayID(long dID) {
+    /*public void setDayID(int dID) {
         this.day_id = dID;
     }*/
 
@@ -48,7 +50,7 @@ public class ObjectExercise {
         this.dayName = dayName;
     }
 
-    public void setNumReps(long nReps) {
+    public void setNumReps(int nReps) {
         this.numReps = nReps;
     }
 
@@ -58,7 +60,7 @@ public class ObjectExercise {
 
     // getters
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -66,7 +68,7 @@ public class ObjectExercise {
         return exerciseName;
     }
 
-    /*public Long getDayID() {
+    /*public int getDayID() {
         return day_id;
     }*/
 
@@ -74,7 +76,7 @@ public class ObjectExercise {
         return dayName;
     }
 
-    public long getNumReps() {
+    public int getNumReps() {
         return numReps;
     }
 
