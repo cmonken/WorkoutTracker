@@ -10,6 +10,7 @@ package com.group1.workouttracker;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.app.AlertDialog;
@@ -35,6 +36,25 @@ public class OnClickListenerCreateExercise implements OnClickListener {
         final EditText editExerciseName = (EditText) formElementsView.findViewById(R.id.editTextExerciseName);
         final NumberPicker editRepetitions = (NumberPicker) formElementsView.findViewById(R.id.npNumReps);
         final EditText editNotes = (EditText) formElementsView.findViewById(R.id.editTextNotes);
+
+        editNotes.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         //NumberPicker setup
         String[] values = new String[5];

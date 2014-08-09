@@ -31,8 +31,6 @@ public class DayActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_day);
-
-
         db = DatabaseHelper.getInstance(getApplicationContext());
 
         intent = getIntent();
