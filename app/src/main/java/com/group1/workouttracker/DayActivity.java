@@ -78,10 +78,10 @@ public class DayActivity extends Activity {
     }
 
 
-    public void readSummary(String buttonClicked) {
+/*    public void readSummary(String buttonClicked) {
         //TextView textViewSummary = (TextView) findViewById(R.id.textViewSummary);
         textViewSummary.setOnLongClickListener(new OnLongClickListenerEditSummary(buttonClicked));
-    }
+    }  */
 
     public void readRecords(String buttonClicked) {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);

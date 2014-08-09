@@ -11,7 +11,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -33,26 +32,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table names
     public static final String TABLE_DAY_OF_WEEK = "table_day_of_week";
-    public static final String TABLE_DAY_HAS_EX = "table_day_exercise";
     public static final String TABLE_EXERCISE = "table_exercise";
     public static final String TABLE_EX_HAS_HIS = "table_exercise_history";
     public static final String TABLE_HISTORY = "table_history";
 
     // Common column names
     public static final String KEY_ID = "_id";
-    public static final String COLUMN_EXERCISE_ID = "exercise_id";
     public static final String COLUMN_EXERCISE = "exerciseName";
+    public static final String COLUMN_WEEKDAY = "dayName";
     public static final String COLUMN_REPETITIONS = "numReps";
     public static final String COLUMN_NOTES = "notes";
 
     // Dayofweek table columns
-    public static final String COLUMN_WEEKDAY = "dayName";
     public static final String COLUMN_SUMMARY = "summary";
 
-    // Day Has Exercises table columns
-    public static final String COLUMN_DAY_ID = "day_id";
-
     // Exercise Has History table columns
+    public static final String COLUMN_EXERCISE_ID = "exercise_id";
     public static final String COLUMN_HISTORY_ID = "history_id";
 
     // History table columns
@@ -62,11 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Dayofweek table creation statement
     private static final String CREATE_DAYOFWEEK_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DAY_OF_WEEK + "( " + KEY_ID +
-            " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_WEEKDAY + " TEXT, " + COLUMN_SUMMARY + " TEXT )";
-
-    // Day Has Exercises  table creation statement
-    private static final String CREATE_DAY_HAS_EX_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DAY_HAS_EX + "( " + KEY_ID +
-            " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DAY_ID + " INTEGER, " + COLUMN_EXERCISE_ID  + " INTEGER )";
+            " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_WEEKDAY + " TEXT UNIQUE, " + COLUMN_SUMMARY + " TEXT )";
 
     // Exercise table creation statement
     private static final String CREATE_EXERCISE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_EXERCISE + "( " + KEY_ID +
@@ -99,7 +90,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // create required tables
         db.execSQL(CREATE_DAYOFWEEK_TABLE);
-        //db.execSQL(CREATE_DAY_HAS_EX_TABLE);
         db.execSQL(CREATE_EXERCISE_TABLE);
         //db.execSQL(CREATE_EX_HAS_HISTORY_TABLE);
         //db.execSQL(CREATE_HISTORY_TABLE);
@@ -112,7 +102,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertWeekday("Friday", db);
         insertWeekday("Saturday", db);
         insertWeekday("Sunday", db);
-
     }
 
     @Override
@@ -122,7 +111,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // on upgrade drop older tables
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY_OF_WEEK);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAY_HAS_EX);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EX_HAS_HIS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
@@ -160,7 +148,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISE, objectExercise.getExerciseName());
-        //values.put(COLUMN_WEEKDAY, objectExercise.getDayID());
         values.put(COLUMN_WEEKDAY, objectExercise.getDayName());
         values.put(COLUMN_REPETITIONS, objectExercise.getNumReps());
         values.put(COLUMN_NOTES, objectExercise.getNotes());
@@ -169,12 +156,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long exercise_id = db.insert(TABLE_EXERCISE, null, values);
         //db.close();
 
-        // assign day to exercise
-
-        /*for(long day_id : day_ids){
-            createDayHasExercise(day_id, exercise_id);
-        }*/
-
         return exercise_id;
     }
 
@@ -182,7 +163,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         getReadableDatabase();
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
 
-        //String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = ?";
         String sql = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + COLUMN_WEEKDAY + " = ?";
         Cursor cursor = db.rawQuery(sql, new String[] { dName });
 
@@ -191,15 +171,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 long id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
                 String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
-                //long dID = ((long) Integer.parseInt(cursor.getString(cursor.getColumnIndex("dayID"))));
-                String dayName = cursor.getString(cursor.getColumnIndex("dayID"));
+                String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
                 int nReps = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numReps")));
                 String notes = cursor.getString(cursor.getColumnIndex("notes"));
 
                 ObjectExercise objectExercise = new ObjectExercise();
                 objectExercise.setId(id);
                 objectExercise.setExerciseName(eName);
-                //objectExercise.setDayID(dID);
                 objectExercise.setDayName(dayName);
                 objectExercise.setNumReps(nReps);
                 objectExercise.setNotes(notes);
@@ -222,10 +200,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
 
         if (cursor.moveToFirst()) {
-
             long _id = ((long) Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id"))));
             String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
-            //long dID = ((long) Integer.parseInt(cursor.getString(cursor.getColumnIndex("dayID"))));
             String dayName = cursor.getString(cursor.getColumnIndex("dayID"));
             Integer nReps = cursor.getInt(cursor.getColumnIndex("numReps"));
             String notes = cursor.getString(cursor.getColumnIndex("notes"));
@@ -233,15 +209,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             objectExercise = new ObjectExercise();
             objectExercise.setId(_id);
             objectExercise.setExerciseName(eName);
-            //objectExercise.setDayID(dID);
             objectExercise.setDayName(dayName);
             objectExercise.setNumReps(nReps);
             objectExercise.setNotes(notes);
         }
-
         cursor.close();
         return objectExercise;
-
     }
 
     public boolean updateExercise(ObjectExercise objectExercise) {
@@ -294,12 +267,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ObjectDay objectDay = new ObjectDay();
         objectDay.setDayName(dName);
 
-        //String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = '" + dName + "'";
-        //Cursor cursor = db.rawQuery(sql, null);
         String sql = "SELECT * FROM " + TABLE_DAY_OF_WEEK + " WHERE " + COLUMN_WEEKDAY + " = ?";
         Cursor cursor = db.rawQuery(sql, new String[] { dName });
-
-
 
         if (cursor.moveToFirst()) {
 
@@ -357,7 +326,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // create relationship between days and exercises
-    public long createDayHasExercise(long day_id, long exercise_id) {
+/*    public long createDayHasExercise(long day_id, long exercise_id) {
         db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -366,7 +335,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long id = db.insert(TABLE_DAY_HAS_EX, null, values);
         return id;
-    }
+    } */
 
     /*
     public int count() {
