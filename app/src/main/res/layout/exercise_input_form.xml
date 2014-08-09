@@ -13,6 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:hint="Exercise Name"
+        android:gravity="center_horizontal"
         android:singleLine="true" >
 
         <requestFocus />
@@ -49,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
         android:singleLine="true"
         android:hint="Notes" />
 
