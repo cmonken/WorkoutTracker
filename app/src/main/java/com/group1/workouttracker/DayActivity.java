@@ -109,8 +109,8 @@ public class DayActivity extends Activity {
                 int numReps = obj.getNumReps();
                 String notes = obj.getNotes();
 
-                //String textViewContents = exerciseName + ", # Reps: " + numReps + "  Notes: " + notes;
-                String textViewContents = exerciseName + "\t" + numReps + "\t" + notes;
+                String textViewContents = exerciseName + numReps + "Reps" + "Notes: " + notes;
+                //String textViewContents = exerciseName + "\t" + numReps + "\t" + notes;
 
                 TextView textViewLocationItem = new TextView(this);
                 textViewLocationItem.setPadding(10, 10, 10, 10);
