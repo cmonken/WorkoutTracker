@@ -10,6 +10,7 @@ package com.group1.workouttracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 
 public class DayActivity extends Activity {
     //does not extend ListActivity, so list functions must be called by myList object
@@ -99,33 +108,38 @@ public class DayActivity extends Activity {
     public void readRecords(String buttonClicked) {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
-        long timeStamp = System.currentTimeMillis();
+        final DatabaseHelper helper = DatabaseHelper.getInstance(this);
 
-        final List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
+        final List<ObjectExercise> exercise = helper.getAllExercisesByDay(buttonClicked);
 
         if (exercise.size() > 0) {
 
             for (ObjectExercise obj : exercise) {
                 final ObjectExercise myExercise = obj; //need to declare this as final in order to call setters
                 final Switch completedSwitch = new Switch(this);
-                int id = myExercise.getId();
+                final int id = myExercise.getId();
                 String exerciseName = myExercise.getExerciseName();
                 int numSets = myExercise.getNumSets();
                 String notes = myExercise.getNotes();
                 String isCompleted = myExercise.getIsCompleted();
+                String textViewContents;
 
-                String textViewContents = exerciseName + ", \t" + numSets + " Sets" + ", \tNotes: " + notes;
+                if(numSets == 1)
+                    textViewContents = exerciseName + ", \t" + numSets + " Set, " + "\tNotes: " + notes;
+                else
+                    textViewContents = exerciseName + ", \t" + numSets + " Sets, " + "\tNotes: " + notes;
 
-                TextView textViewLocationItem = new TextView(this);
-                textViewLocationItem.setPadding(10, 10, 10, 10);
-                textViewLocationItem.setText(textViewContents);
-                textViewLocationItem.setTag(Integer.toString(id));
-                textViewLocationItem.setTextSize(16);
+                TextView singleExercise = new TextView(this);
+                singleExercise.setPadding(10, 10, 10, 10);
+                singleExercise.setText(textViewContents);
+                singleExercise.setTag(Integer.toString(id));
+                singleExercise.setTextSize(16);
 
-                completedSwitch.setText("Done");
-                completedSwitch.setTextOn("Yes");
-                completedSwitch.setTextOff("No");
-                completedSwitch.setGravity(0x05);
+                //completedSwitch.setText("Done");
+                completedSwitch.setTextOn("Done");
+                completedSwitch.setTextOff("Pending");
+                //completedSwitch.setGravity(0x05); //right, although these tags don't seem to do anything but cause
+                //null pointer exceptions
 
                 //set switch based on whether exercise has been completed
                 if(isCompleted == null) {} //do nothing on null
@@ -141,13 +155,21 @@ public class DayActivity extends Activity {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if(isChecked) {
                             myExercise.setIsCompleted("true");
+                            myExercise.setDate(getDateTimeWithTimezone());
                             updateDatabase(myExercise);
+                            //add record to history table -- exercise id shared with history table
+                            boolean createSuccessful = helper.createCompletedRecord(myExercise, myExercise.getId());
+                        }
+                        else if (isChecked == false) {
+                            int id = myExercise.getId();
+                            myExercise.setDate(null);
+                            boolean deleteSuccessful = helper.deleteCompletedRecord(String.valueOf(id));
                         }
                     }
                 });
 
-                textViewLocationItem.setOnLongClickListener(new OnLongClickListenerEditExercise(buttonClicked));
-                linearLayoutRecords.addView(textViewLocationItem);
+                singleExercise.setOnLongClickListener(new OnLongClickListenerEditExercise(buttonClicked));
+                linearLayoutRecords.addView(singleExercise);
                 linearLayoutRecords.addView(completedSwitch);
             }
         }
@@ -159,9 +181,42 @@ public class DayActivity extends Activity {
         }
     }
 
+    /* simpler implementation -- delete at production stage
+    public String getTimeStamp () {
+        long timestamp = System.currentTimeMillis();
+        Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(timestamp);
+        String date = DateFormat.format("MM-dd-yyyy", cal).toString();
+        Toast.makeText(getApplicationContext(), "Date: " + date, Toast.LENGTH_SHORT).show();
+        return date;
+    }*/
+
+    private String getDateTimeWithTimezone(){
+        long timestamp = System.currentTimeMillis();
+        Date date = new Date(timestamp);
+        //Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT")); //can set specific timezone here
+        Calendar cal = new GregorianCalendar(TimeZone.getDefault()); //pull timezone from settings
+        cal.setTime(date);
+
+        //some of the following code adapted from
+        //http://www.deepakgaikwad.net/index.php/2010/02/10/long-time-stamp-to-date-conversion-in-java.html
+        String str = ((cal.get(Calendar.MONTH) + 1) //+1 to account for January == 0
+                + "/" + cal.get(Calendar.DATE)
+                + "/" + cal.get(Calendar.YEAR)
+                /*+ " " + cal.get(Calendar.HOUR) //not using time at this point, but it was verified to be accurate
+                + ":" + cal.get(Calendar.MINUTE)
+                + ":" + cal.get(Calendar.SECOND)
+                + " " + (cal.get(Calendar.AM_PM)==0?"AM":"PM")*/
+        );
+
+        Toast.makeText(getApplicationContext(), "Date: " + str, Toast.LENGTH_SHORT).show();
+        return str;
+
+    }
+
     public void updateDatabase (ObjectExercise myExercise) {
         DatabaseHelper helper = DatabaseHelper.getInstance(this);
-        helper.updateExercise(myExercise);
+        helper.updateCompleted(myExercise);
     }
 
     public void callReportsIntent() {

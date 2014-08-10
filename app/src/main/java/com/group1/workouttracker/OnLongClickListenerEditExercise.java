@@ -25,8 +25,8 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
     @Override
     public boolean onLongClick(View view) {
-
         context = view.getContext();
+        final DatabaseHelper helper = DatabaseHelper.getInstance(context);
         id = view.getTag().toString();
 
         final CharSequence[] items = { "Edit", "Delete" };
@@ -38,18 +38,23 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
                         if (item == 0) {
                             editRecord(Integer.parseInt(id));
                         } else if (item == 1) {
+                            //retrieve exercise to check if it has been completed before deletion
+                            ObjectExercise obj = helper.readSingleExercise(Integer.parseInt(id));
 
-                            boolean deleteSuccessful = DatabaseHelper.getInstance(context).deleteExercise(id);
+                            boolean deleteSuccessful1 = helper.deleteExercise(id);
+                            boolean deleteSuccessful2;
+                            if(obj.getIsCompleted().equals(null) || obj.getIsCompleted().equals("false")) {
+                                deleteSuccessful2 = true;
+                            } //not completed, do nothing
+                            else {
+                                deleteSuccessful2 = helper.deleteExercise(id);
+                            }
 
-                            if (deleteSuccessful) {
+                            if (deleteSuccessful1 && deleteSuccessful2) {
                                 Toast.makeText(context, "Exercise was deleted.", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(context, "Unable to delete exercise.", Toast.LENGTH_SHORT).show();
                             }
-
-                            // ((MainActivity) context).countRecords();
-                            // ((MainActivity) context).readRecords();
-
                         }
                         ((DayActivity) context).refreshView(dayClicked);
                         dialog.dismiss();

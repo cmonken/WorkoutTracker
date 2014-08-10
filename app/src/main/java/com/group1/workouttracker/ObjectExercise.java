@@ -16,10 +16,12 @@ public class ObjectExercise {
     private int numSets;
     private String notes;
     private String isCompleted;
+    private String date;
+    private String time;
 
     // constructors
     //public ObjectExercise( int id, String eName, int dID, int nReps, String notes){
-    public ObjectExercise( int id, String eName, String dayName, int nReps, String notes, String isCompleted){
+    public ObjectExercise( int id, String eName, String dayName, int numSets, String notes, String isCompleted){
         this.id = id;
         this.exerciseName = eName;
         //this.day_id = dID;
@@ -42,10 +44,6 @@ public class ObjectExercise {
         this.exerciseName = eName;
     }
 
-    /*public void setDayID(int dID) {
-        this.day_id = dID;
-    }*/
-
     public void setDayName(String dayName) {
         this.dayName = dayName;
     }
@@ -67,6 +65,10 @@ public class ObjectExercise {
             this.isCompleted = "false";
     }
 
+    public void setDate(String date) {
+       this.date = date;
+    }
+
     // getters
 
     public int getId() {
@@ -76,10 +78,6 @@ public class ObjectExercise {
     public String getExerciseName() {
         return exerciseName;
     }
-
-    /*public int getDayID() {
-        return day_id;
-    }*/
 
     public String getDayName() {
         return dayName;
@@ -95,6 +93,10 @@ public class ObjectExercise {
 
     public String getIsCompleted() {
         return isCompleted;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     // Will be used by the ArrayAdapter in the ListView

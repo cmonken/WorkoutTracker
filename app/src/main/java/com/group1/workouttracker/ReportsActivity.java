@@ -5,29 +5,100 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 
 public class ReportsActivity extends Activity {
 
-    String buttonClicked;
-    View target;
+    private String buttonClicked;
+    private DatabaseHelper db;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_reports);
-        Intent intent = getIntent();
+        intent = getIntent();
         /*buttonClicked = intent.getStringExtra("Reports");
         callToast();*/
+
+        db = DatabaseHelper.getInstance(getApplicationContext());
+
+        intent = getIntent();
+        buttonClicked = intent.getStringExtra("Day");
+
+        //readRecords(buttonClicked);
+        readRecords();
+
+        Button helpBtn = (Button) findViewById(R.id.buttonHelp);
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callHelpIntent();
+            }
+        });
+
     }
 
-    public void myClickHandler(View target) {
+    public void callHelpIntent() {
+        intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+    }
+
+    public void readRecords() {
+        LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
+        linearLayoutRecords.removeAllViews();
+        final DatabaseHelper helper = DatabaseHelper.getInstance(this);
+
+        final List<ObjectExercise> exercise = helper.getAllCompletedExercises();
+
+        if (exercise.size() > 0) {
+
+            for (ObjectExercise obj : exercise) {
+                //final ObjectExercise myExercise = obj; //need to declare this as final in order to call setters
+
+                int id = obj.getId();
+                String exerciseName = obj.getExerciseName();
+                int numSets = obj.getNumSets();
+                String notes = obj.getNotes();
+                String date = obj.getDate();
+                String textViewContents;
+
+                if(numSets == 1) {
+                    textViewContents = exerciseName + ", \t" + numSets + " Set" + ", \tNotes: " + notes +
+                            "\n Completed on: " + date;
+                }
+                else {
+                    textViewContents = exerciseName + ", \t" + numSets + " Sets" + ", \tNotes: " + notes +
+                            "\n Completed on: " + date;
+                }
+
+                TextView textViewLocationItem = new TextView(this);
+                textViewLocationItem.setPadding(10, 10, 10, 10);
+                textViewLocationItem.setText(textViewContents);
+                textViewLocationItem.setTag(Integer.toString(id));
+                textViewLocationItem.setTextSize(16);
+
+                textViewLocationItem.setOnLongClickListener(new OnLongClickListenerEditExercise(buttonClicked));
+                linearLayoutRecords.addView(textViewLocationItem);
+            }
+        }
+        else {
+            TextView locationItem = new TextView(this);
+            locationItem.setPadding(10, 10, 10, 10);
+            locationItem.setText("No records yet.");
+            linearLayoutRecords.addView(locationItem);
+        }
     }
 
     @Override
