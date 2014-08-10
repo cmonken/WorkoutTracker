@@ -56,13 +56,13 @@ public class OnClickListenerCreateExercise implements OnClickListener {
                             public void onClick(DialogInterface dialog, int id) {
 
                                 String eName = editExerciseName.getText().toString();
-                                Integer nReps = editRepetitions.getValue();
+                                Integer numSets = editRepetitions.getValue();
                                 String notes = editNotes.getText().toString();
 
                                 ObjectExercise objectExercise = new ObjectExercise();
                                 objectExercise.setExerciseName(eName);
                                 objectExercise.setDayName(dayClicked);
-                                objectExercise.setNumReps(nReps);
+                                objectExercise.setNumSets(numSets);
                                 objectExercise.setNotes(notes);
 
                                 //boolean createSuccessful = new MyDatabaseHandler(context).createExercise(objectExercise);

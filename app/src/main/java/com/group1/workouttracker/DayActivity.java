@@ -15,9 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewParent;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.List;
 
 public class DayActivity extends Activity {
@@ -94,23 +97,24 @@ public class DayActivity extends Activity {
     }
 
     public void readRecords(String buttonClicked) {
-        boolean titlePrinted = false;
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
         linearLayoutRecords.removeAllViews();
+        long timeStamp = System.currentTimeMillis();
 
-        List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
+        final List<ObjectExercise> exercise = DatabaseHelper.getInstance(this).getAllExercisesByDay(buttonClicked);
 
         if (exercise.size() > 0) {
 
             for (ObjectExercise obj : exercise) {
+                final ObjectExercise myExercise = obj; //need to declare this as final in order to call setters
+                final Switch completedSwitch = new Switch(this);
+                int id = myExercise.getId();
+                String exerciseName = myExercise.getExerciseName();
+                int numSets = myExercise.getNumSets();
+                String notes = myExercise.getNotes();
+                String isCompleted = myExercise.getIsCompleted();
 
-                int id = obj.getId();
-                String exerciseName = obj.getExerciseName();
-                int numReps = obj.getNumReps();
-                String notes = obj.getNotes();
-
-                String textViewContents = exerciseName + numReps + "Reps" + "Notes: " + notes;
-                //String textViewContents = exerciseName + "\t" + numReps + "\t" + notes;
+                String textViewContents = exerciseName + ", \t" + numSets + " Sets" + ", \tNotes: " + notes;
 
                 TextView textViewLocationItem = new TextView(this);
                 textViewLocationItem.setPadding(10, 10, 10, 10);
@@ -118,26 +122,46 @@ public class DayActivity extends Activity {
                 textViewLocationItem.setTag(Integer.toString(id));
                 textViewLocationItem.setTextSize(16);
 
-                Switch isComplete = new Switch(this);
-                isComplete.setText("Done");
-                isComplete.setTextOn("Yes");
-                isComplete.setTextOff("No");
-                isComplete.setGravity(0x05);
+                completedSwitch.setText("Done");
+                completedSwitch.setTextOn("Yes");
+                completedSwitch.setTextOff("No");
+                completedSwitch.setGravity(0x05);
+
+                //set switch based on whether exercise has been completed
+                if(isCompleted == null) {} //do nothing on null
+                else if(isCompleted.equals("true")) {
+                    completedSwitch.setChecked(true);
+                }
+                else {
+                    completedSwitch.setChecked(false);
+                }
                 //http://developer.android.com/reference/android/widget/TextView.html#attr_android:gravity
+                completedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if(isChecked) {
+                            myExercise.setIsCompleted("true");
+                            updateDatabase(myExercise);
+                        }
+                    }
+                });
 
                 textViewLocationItem.setOnLongClickListener(new OnLongClickListenerEditExercise(buttonClicked));
-
                 linearLayoutRecords.addView(textViewLocationItem);
-                linearLayoutRecords.addView(isComplete);
+                linearLayoutRecords.addView(completedSwitch);
             }
         }
         else {
             TextView locationItem = new TextView(this);
             locationItem.setPadding(10, 10, 10, 10);
             locationItem.setText("No records yet.");
-
             linearLayoutRecords.addView(locationItem);
         }
+    }
+
+    public void updateDatabase (ObjectExercise myExercise) {
+        DatabaseHelper helper = DatabaseHelper.getInstance(this);
+        helper.updateExercise(myExercise);
     }
 
     public void callReportsIntent() {

@@ -14,7 +14,8 @@
         android:layout_alignParentTop="true"
         android:hint="Exercise Name"
         android:gravity="center_horizontal"
-        android:singleLine="true" >
+        android:singleLine="true"
+        android:focusableInTouchMode="true">
 
         <requestFocus />
     </EditText>
@@ -42,7 +43,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="# of Reps"
+        android:text="# of Sets"
         android:id="@+id/textViewNoRepsLabel"
         android:paddingTop="25dp"
         android:textSize="18dp" />

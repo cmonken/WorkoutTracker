@@ -42,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_WEEKDAY = "dayName";
     public static final String COLUMN_REPETITIONS = "numReps";
     public static final String COLUMN_NOTES = "notes";
+    public static final String COLUMN_COMPLETED = "isCompleted";
 
     // Dayofweek table columns
     public static final String COLUMN_SUMMARY = "summary";
@@ -61,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Exercise table creation statement
     private static final String CREATE_EXERCISE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_EXERCISE + "( " + KEY_ID +
-            " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EXERCISE + " TEXT, " + COLUMN_WEEKDAY + " TEXT, " + COLUMN_REPETITIONS + " INTEGER, " + COLUMN_NOTES + " TEXT )";
+            " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EXERCISE + " TEXT, " + COLUMN_WEEKDAY + " TEXT, " + COLUMN_REPETITIONS + " INTEGER, " + COLUMN_NOTES + " TEXT, " + COLUMN_COMPLETED + " TEXT )";
 
     // Exercise Has History table creation statement
     private static final String CREATE_EX_HAS_HISTORY_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_EX_HAS_HIS + "( " + KEY_ID +
@@ -149,8 +150,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISE, objectExercise.getExerciseName());
         values.put(COLUMN_WEEKDAY, objectExercise.getDayName());
-        values.put(COLUMN_REPETITIONS, objectExercise.getNumReps());
+        values.put(COLUMN_REPETITIONS, objectExercise.getNumSets());
         values.put(COLUMN_NOTES, objectExercise.getNotes());
+        //values.put(COLUMN_COMPLETED, objectExercise.getIsCompleted());
 
         // insert exercise in table_exercise
         int exercise_id = (int)(db.insert(TABLE_EXERCISE, null, values));
@@ -171,15 +173,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
                 String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
                 String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
-                int nReps = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numReps")));
+                int numSets = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numReps")));
                 String notes = cursor.getString(cursor.getColumnIndex("notes"));
+                String isCompleted = cursor.getString(cursor.getColumnIndex("isCompleted"));
 
                 ObjectExercise objectExercise = new ObjectExercise();
                 objectExercise.setId(id);
                 objectExercise.setExerciseName(eName);
                 objectExercise.setDayName(dayName);
-                objectExercise.setNumReps(nReps);
+                objectExercise.setNumSets(numSets);
                 objectExercise.setNotes(notes);
+                objectExercise.setIsCompleted(isCompleted);
 
                 exerciseList.add(objectExercise);
 
@@ -202,15 +206,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int _id = (Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id"))));
             String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
             String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
-            Integer nReps = cursor.getInt(cursor.getColumnIndex("numReps"));
+            Integer numSets = cursor.getInt(cursor.getColumnIndex("numReps"));
             String notes = cursor.getString(cursor.getColumnIndex("notes"));
+            String isCompleted = cursor.getString(cursor.getColumnIndex("isCompleted"));
 
             objectExercise = new ObjectExercise();
             objectExercise.setId(_id);
             objectExercise.setExerciseName(eName);
             objectExercise.setDayName(dayName);
-            objectExercise.setNumReps(nReps);
+            objectExercise.setNumSets(numSets);
             objectExercise.setNotes(notes);
+            //objectExercise.setIsCompleted(isCompleted);
         }
         cursor.close();
         return objectExercise;
@@ -223,8 +229,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("exerciseName", objectExercise.getExerciseName());
         //values.put("dayName", objectExercise.getDayID());
         values.put("dayName", objectExercise.getDayName());
-        values.put("numReps", objectExercise.getNumReps());
+        values.put("numReps", objectExercise.getNumSets());
         values.put("notes", objectExercise.getNotes());
+        values.put("isCompleted", objectExercise.getIsCompleted());
 
         String where = "_id = ?";
 
@@ -246,6 +253,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        //db.close();
 
         return deleteSuccessful;
+    }
+
+    public boolean updateCompleted(ObjectExercise objectExercise) {
+        getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("isCompleted", objectExercise.getIsCompleted());
+        String where = "_id = ?";
+        String[] whereArgs = {Integer.toString(objectExercise.getId())};
+
+        boolean updateSuccessful = db.update("table_exercise", values, where, whereArgs) > 0;
+        //db.close();
+
+        return updateSuccessful;
     }
 
     public int exerciseCount() {

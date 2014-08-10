@@ -79,7 +79,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
         }
 
         editTextExerciseName.setText(objectExercise.getExerciseName());
-        editRepetitions.setValue(objectExercise.getNumReps());
+        editRepetitions.setValue(objectExercise.getNumSets());
         editTextNotes.setText(objectExercise.getNotes());
 
         editRepetitions.setMinValue(1);
@@ -98,7 +98,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
                                 objectExercise.setId(exerciseId);
                                 objectExercise.setDayName(dayClicked);
                                 objectExercise.setExerciseName(editTextExerciseName.getText().toString());
-                                objectExercise.setNumReps(editRepetitions.getValue());
+                                objectExercise.setNumSets(editRepetitions.getValue());
                                 objectExercise.setNotes(editTextNotes.getText().toString());
 
                                 boolean updateSuccessful = DatabaseHelper.getInstance(context).updateExercise(objectExercise);

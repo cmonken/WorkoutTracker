@@ -13,20 +13,20 @@ public class ObjectExercise {
     private String exerciseName;
     private String dayName;
     //private int day_id;
-    private int numReps;
+    private int numSets;
     private String notes;
-    private boolean isCompleted;
+    private String isCompleted;
 
     // constructors
     //public ObjectExercise( int id, String eName, int dID, int nReps, String notes){
-    public ObjectExercise( int id, String eName, String dayName, int nReps, String notes){
+    public ObjectExercise( int id, String eName, String dayName, int nReps, String notes, String isCompleted){
         this.id = id;
         this.exerciseName = eName;
         //this.day_id = dID;
         this.dayName = dayName;
-        this.numReps = nReps;
+        this.numSets = numSets;
         this.notes = notes;
-        isCompleted = false;
+        this.isCompleted = isCompleted;
     }
 
     public ObjectExercise(){
@@ -50,12 +50,21 @@ public class ObjectExercise {
         this.dayName = dayName;
     }
 
-    public void setNumReps(int nReps) {
-        this.numReps = nReps;
+    public void setNumSets(int numSets) {
+        this.numSets = numSets;
     }
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void setIsCompleted(String isCompleted) {
+        if(isCompleted == null) {} //do nothing on null
+        else if(isCompleted.equals("true")) {
+            this.isCompleted = "true";
+        }
+        else
+            this.isCompleted = "false";
     }
 
     // getters
@@ -76,17 +85,21 @@ public class ObjectExercise {
         return dayName;
     }
 
-    public int getNumReps() {
-        return numReps;
+    public int getNumSets() {
+        return numSets;
     }
 
     public String getNotes() {
         return notes;
     }
 
+    public String getIsCompleted() {
+        return isCompleted;
+    }
+
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
-        return "Exercise: " + exerciseName + ", # Reps:  " + numReps + ", Notes: " + notes;
+        return "Exercise: " + exerciseName + ", # Reps:  " + numSets + ", Notes: " + notes;
     }
 }
