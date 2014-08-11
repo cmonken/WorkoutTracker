@@ -49,14 +49,23 @@ public class ReportsActivity extends Activity {
         });
 
         Button graphBtn = (Button) findViewById(R.id.buttonGraph);
-        //graphBtn.setOnClickListener(new OnClickListenerCreateGraph());
-
+        graphBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //callGraphIntent();
+            }
+        });
     }
 
     public void callHelpIntent() {
         intent = new Intent(this, HelpActivity.class);
         startActivity(intent);
     }
+
+    /*public void callGraphIntent() {
+        intent = new Intent(this, GraphView.class);
+        startActivity(intent);
+    }*/
 
     public void readRecords() {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);
@@ -92,7 +101,7 @@ public class ReportsActivity extends Activity {
                 textViewLocationItem.setTag(Integer.toString(id));
                 textViewLocationItem.setTextSize(16);
 
-                //no listener for these textViews at this time.. must update from DayActivity
+                //no listener for these textViews at this time.. exercise must be updated from DayActivity
                 linearLayoutRecords.addView(textViewLocationItem);
             }
         }
