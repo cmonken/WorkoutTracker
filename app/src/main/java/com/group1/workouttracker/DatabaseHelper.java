@@ -229,7 +229,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                //int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
                 String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
                 String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
                 int numSets = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numSets")));
@@ -237,7 +237,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String date = cursor.getString(cursor.getColumnIndex("date"));
 
                 ObjectExercise objectExercise = new ObjectExercise();
-                //objectExercise.setId(id);
+                objectExercise.setId(id);
                 objectExercise.setExerciseName(eName);
                 objectExercise.setDayName(dayName);
                 objectExercise.setNumSets(numSets);

@@ -48,6 +48,9 @@ public class ReportsActivity extends Activity {
             }
         });
 
+        Button graphBtn = (Button) findViewById(R.id.buttonGraph);
+        //graphBtn.setOnClickListener(new OnClickListenerCreateGraph());
+
     }
 
     public void callHelpIntent() {
@@ -89,7 +92,7 @@ public class ReportsActivity extends Activity {
                 textViewLocationItem.setTag(Integer.toString(id));
                 textViewLocationItem.setTextSize(16);
 
-                textViewLocationItem.setOnLongClickListener(new OnLongClickListenerEditExercise(buttonClicked));
+                //no listener for these textViews at this time.. must update from DayActivity
                 linearLayoutRecords.addView(textViewLocationItem);
             }
         }

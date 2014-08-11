@@ -98,7 +98,6 @@
             android:text="@string/button8"
             android:id="@+id/buttonReports"
             android:gravity="center"
-            android:onClick="myClickHandler"
             android:layout_weight="1"
             android:clickable="true"
             android:enabled="true" />
@@ -108,7 +107,6 @@
             android:layout_height="wrap_content"
             android:text="@string/button9"
             android:id="@+id/buttonHelp"
-            android:onClick="myClickHandler"
             android:layout_weight="1"
             android:clickable="true"
             android:enabled="true"

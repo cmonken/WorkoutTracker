@@ -29,8 +29,8 @@
             android:label="@string/title_activity_reports" >
         </activity>
         <activity
-            android:name=".OnClickListenerCreateExercise"
-            android:label="@string/title_activity_click" >
+            android:name=".GraphActivity"
+            android:label="@string/title_activity_graph" >
         </activity>
     </application>
 

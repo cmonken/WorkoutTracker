@@ -43,7 +43,7 @@ public class OnLongClickListenerEditExercise implements View.OnLongClickListener
 
                             boolean deleteSuccessful1 = helper.deleteExercise(id);
                             boolean deleteSuccessful2;
-                            if(obj.getIsCompleted().equals(null) || obj.getIsCompleted().equals("false")) {
+                            if (obj.getIsCompleted().equals(null) || obj.getIsCompleted().equals("false")) {
                                 deleteSuccessful2 = true;
                             } //not completed, do nothing
                             else {

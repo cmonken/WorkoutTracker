@@ -3,6 +3,7 @@
 
     <string name="app_name">Workout Tracker</string>
     <string name="title_activity_day">Daily View</string>
+    <string name="title_activity_graph">History</string>
 
 
     <string name="add_exercise">Add new exercise</string>
@@ -49,17 +50,6 @@
     <string name="land_button6">S\na\nt\nu\nr\nd\na\ny</string>
     <string name="land_button7">S\nu\nn\nd\na\ny</string>
     <string name="textView1">Long press here to edit summary</string>
-
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

@@ -38,18 +38,33 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/linearLayout2"
+        android:layout_gravity="center_horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/button9"
-            android:id="@+id/buttonHelp"
-            android:onClick="myClickHandler"
+            android:text="Graph"
+            android:id="@+id/buttonGraph"
+            android:gravity="center"
             android:layout_weight="1"
             android:clickable="true"
             android:enabled="true" />
 
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/button9"
+            android:id="@+id/buttonHelp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:enabled="true"
+            android:layout_marginLeft="30dp" />
     </LinearLayout>
 
 </LinearLayout>

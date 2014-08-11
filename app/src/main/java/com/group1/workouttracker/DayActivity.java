@@ -38,8 +38,8 @@ public class DayActivity extends Activity {
     private String buttonClicked;
     private String thisSummary;
     private Intent intent;
-    DatabaseHelper db;
-    TextView textViewSummary;
+    private DatabaseHelper db;
+    private TextView textViewSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +209,7 @@ public class DayActivity extends Activity {
                 + " " + (cal.get(Calendar.AM_PM)==0?"AM":"PM")*/
         );
 
-        Toast.makeText(getApplicationContext(), "Date: " + str, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Completed on " + str, Toast.LENGTH_SHORT).show();
         return str;
 
     }
@@ -231,6 +231,8 @@ public class DayActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // Handle action bar item clicks here. The action bar will
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
