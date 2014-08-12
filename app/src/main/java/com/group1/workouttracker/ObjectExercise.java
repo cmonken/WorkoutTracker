@@ -99,6 +99,33 @@ public class ObjectExercise {
         return date;
     }
 
+    public int getDay() {
+        String temp = this.getDayName();
+        int day = -1;
+        if(temp.equals("Sunday")) {
+            day = 1;
+        }
+        else if(temp.equals("Monday")) {
+            day = 2;
+        }
+        else if(temp.equals("Tuesday")) {
+            day = 3;
+        }
+        else if(temp.equals("Wednesday")) {
+            day = 4;
+        }
+        else if(temp.equals("Thursday")) {
+            day = 5;
+        }
+        else if(temp.equals("Friday")) {
+            day = 6;
+        }
+        else if(temp.equals("Saturday")) {
+            day = 7;
+        }
+        return day;
+    }
+
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {

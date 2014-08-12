@@ -9,18 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 
 public class ReportsActivity extends Activity {
 
-    private String buttonClicked;
     private DatabaseHelper db;
     private Intent intent;
 
@@ -29,15 +25,8 @@ public class ReportsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_reports);
         intent = getIntent();
-        /*buttonClicked = intent.getStringExtra("Reports");
-        callToast();*/
 
-        db = DatabaseHelper.getInstance(getApplicationContext());
-
-        intent = getIntent();
-        buttonClicked = intent.getStringExtra("Day");
-
-        //readRecords(buttonClicked);
+         //readRecords(buttonClicked);
         readRecords();
 
         Button helpBtn = (Button) findViewById(R.id.buttonHelp);
@@ -48,24 +37,32 @@ public class ReportsActivity extends Activity {
             }
         });
 
-        Button graphBtn = (Button) findViewById(R.id.buttonGraph);
-        graphBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //callGraphIntent();
-            }
-        });
+        Button reportBtn = (Button) findViewById(R.id.buttonReport);
+        reportBtn.setOnClickListener(new OnClickListenerCreateReport());
+
+    }
+
+    //used to set textfields on history report
+    public void setData(int numExercises, int numRemaining, int numCompleted, float percentage) {
+        String percentStr= "";
+        setContentView(R.layout.history_report);
+
+        TextView data1 = (TextView) findViewById(R.id.textViewData1);
+        TextView data2 = (TextView) findViewById(R.id.textViewData2);
+        TextView data3 = (TextView) findViewById(R.id.textViewData3);
+        TextView data4 = (TextView) findViewById(R.id.textViewData4);
+
+        data1.setText(Integer.toString(numExercises));
+        data2.setText(Integer.toString(numRemaining));
+        data3.setText(Integer.toString(numCompleted));
+        data4.setText(percentStr + (percentage) * 100 + "%");
+
     }
 
     public void callHelpIntent() {
         intent = new Intent(this, HelpActivity.class);
         startActivity(intent);
     }
-
-    /*public void callGraphIntent() {
-        intent = new Intent(this, GraphView.class);
-        startActivity(intent);
-    }*/
 
     public void readRecords() {
         LinearLayout linearLayoutRecords = (LinearLayout) findViewById(R.id.linearLayoutExercise);

@@ -28,10 +28,6 @@
             android:name=".ReportsActivity"
             android:label="@string/title_activity_reports" >
         </activity>
-        <activity
-            android:name=".GraphView"
-            android:label="@string/title_activity_graph" >
-        </activity>
     </application>
 
 </manifest>

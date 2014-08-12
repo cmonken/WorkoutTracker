@@ -219,6 +219,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exerciseList;
     }
 
+    public List<ObjectExercise> getAllExercises() {
+        getReadableDatabase();
+        List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();
+
+        String sql = "SELECT * FROM " + TABLE_EXERCISE ;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id")));
+                String eName = cursor.getString(cursor.getColumnIndex("exerciseName"));
+                String dayName = cursor.getString(cursor.getColumnIndex("dayName"));
+                int numSets = Integer.parseInt(cursor.getString(cursor.getColumnIndex("numSets")));
+                String notes = cursor.getString(cursor.getColumnIndex("notes"));
+                String isCompleted = cursor.getString(cursor.getColumnIndex("isCompleted"));
+
+                ObjectExercise objectExercise = new ObjectExercise();
+                objectExercise.setId(id);
+                objectExercise.setExerciseName(eName);
+                objectExercise.setDayName(dayName);
+                objectExercise.setNumSets(numSets);
+                objectExercise.setNotes(notes);
+                objectExercise.setIsCompleted(isCompleted);
+
+                exerciseList.add(objectExercise);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return exerciseList;
+    }
+
     public List<ObjectExercise> getAllCompletedExercises() {
         getReadableDatabase();
         List<ObjectExercise> exerciseList = new ArrayList<ObjectExercise>();

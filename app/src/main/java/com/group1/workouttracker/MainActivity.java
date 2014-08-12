@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 
     public void countRecords() {
         int recordCount = db.count();
-        Toast.makeText(getApplicationContext(), "Exercises in DB: " + recordCount, Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), "Exercises in DB: " + recordCount, Toast.LENGTH_LONG).show();
     }
 
     public void myClickHandler(View target) {
